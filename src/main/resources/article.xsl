@@ -91,6 +91,15 @@
             <xsl:apply-templates select="mxc:record/mxc:datafield[@tag = '102']"/>
             <xsl:call-template name="z103"/>
             <xsl:call-template name="z106"/>
+            <xsl:for-each select="//mxc:datafield[@tag='123']">
+                <datafield tag="123" ind1="#" ind2="#">
+                    <xsl:for-each select="mxc:subfield">
+                        <subfield>
+                            <xsl:attribute name="code" separator="@code"><xsl:value-of select="lower-case(text())"/></xsl:attribute>
+                        </subfield>
+                    </xsl:for-each>
+                </datafield>
+            </xsl:for-each>
             <!-- les zones 300 / 301 / 302 ... /309 sauf 305 $a  génèrent autant de zones 300$a que de chaines séparées par '.-'-->
             <xsl:for-each select="//mxc:datafield[@tag='240']">
                 <xsl:call-template name="zXXX">
@@ -128,6 +137,11 @@
                     <xsl:with-param name="zone" select="@tag"/>
                 </xsl:call-template>
             </xsl:for-each>
+            <xsl:for-each select="//mxc:datafield[@tag='740']">
+                <xsl:call-template name="zXXX">
+                    <xsl:with-param name="zone" select="@tag"/>
+                </xsl:call-template>
+            </xsl:for-each>
             <xsl:for-each select="//mxc:datafield[starts-with(@tag, '5')]">
                 <xsl:call-template name="zXXX">
                     <xsl:with-param name="zone" select="@tag"/>
@@ -137,7 +151,7 @@
                 <xsl:call-template name="z810"/>
             </xsl:for-each>
             <xsl:apply-templates
-                    select="mxc:record/mxc:datafield[not(@tag = '010' or @tag = '039' or @tag = '100' or @tag = '101' or @tag = '102' or @tag = '103' or @tag = '105' or @tag = '106' or @tag = '150' or @tag = '152' or @tag = '160' or @tag = '240' or @tag = '300' or @tag = '301' or @tag = '302' or @tag = '303' or @tag = '304' or @tag = '307' or @tag = '340' or @tag = '341' or @tag = '342' or @tag = '343' or @tag = '344' or @tag = '345' or @tag = '346' or @tag = '347' or @tag = '349' or @tag = '351' or @tag = '352' or @tag = '353' or @tag = '354' or @tag = '360' or @tag = '361' or @tag = '440'  or @tag = '500' or @tag = '510' or @tag = '515' or @tag = '520' or @tag = '530' or @tag = '540' or @tag = '550' or @tag = '580' or @tag = '810')] | @*"
+                    select="mxc:record/mxc:datafield[not(@tag = '010' or @tag = '039' or @tag = '100' or @tag = '101' or @tag = '102' or @tag = '103' or @tag = '105' or @tag = '106' or @tag = '123' or @tag = '150' or @tag = '152' or @tag = '160' or @tag = '240' or @tag = '300' or @tag = '301' or @tag = '302' or @tag = '303' or @tag = '304' or @tag = '307' or @tag = '340' or @tag = '341' or @tag = '342' or @tag = '343' or @tag = '344' or @tag = '345' or @tag = '346' or @tag = '347' or @tag = '349' or @tag = '351' or @tag = '352' or @tag = '353' or @tag = '354' or @tag = '360' or @tag = '361' or @tag = '440'  or @tag = '500' or @tag = '510' or @tag = '515' or @tag = '520' or @tag = '530' or @tag = '540' or @tag = '550' or @tag = '580'or @tag = '740' or @tag = '810')] | @*"
             />
         </record>
     </xsl:template>
@@ -283,7 +297,7 @@
                         <xsl:if test="mxc:subfield[(@code) = 'f']!=''">
                             <xsl:value-of select="concat(' (',mxc:subfield[(@code) = 'f'],')')"/></xsl:if>
                         <xsl:if test="mxc:subfield[(@code) = 't']!=''">
-                            <xsl:value-of select="concat('. ',translate(translate(mxc:subfield[(@code) = 't'],'[',''),']',''))"/>
+                            <xsl:value-of select="concat('. ',translate(mxc:subfield[(@code) = 't'],'[]',''))"/>
                         </xsl:if>
                     </subfield>
                 </xsl:when>
@@ -369,5 +383,4 @@
             <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>
-
 </xsl:stylesheet>
