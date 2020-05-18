@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--     XSL de transformation du marcXml Bnf en marcXml Sudoc. (ERM créé 2020)
     Objectifs : rendre conforme au marcXml Sudoc :
+    v 200518
   -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -100,33 +101,33 @@
                     </xsl:for-each>
                 </datafield>
             </xsl:for-each>
-            <!-- les zones 300 / 301 / 302 ... /309 sauf 305 $a  génèrent autant de zones 300$a que de chaines séparées par '.-'-->
             <xsl:for-each select="//mxc:datafield[@tag='240']">
                 <xsl:call-template name="zXXX">
                     <xsl:with-param name="zone" select="@tag"/>
                 </xsl:call-template>
             </xsl:for-each>
+            <!-- les zones 300 / 301 / 302 ... /309 sauf 305 $a  génèrent autant de zones 300$a que de chaines séparées par '. -'-->
             <xsl:for-each
                     select="//mxc:datafield[starts-with(@tag, '30') and @tag != '305']/mxc:subfield[@code = 'a']">
-                <xsl:for-each select="tokenize(text(), '.-')">
+                <xsl:for-each select="tokenize(text(), '. -')">
                     <xsl:call-template name="z3XX">
                         <xsl:with-param name="tag" select="'300'"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:for-each>
-            <!-- les zones 340 / 341 / 342 ... /349  génèrent autant de zones 340$a que de chaines séparées par '.-'-->
+            <!-- les zones 340 / 341 / 342 ... /349  génèrent autant de zones 340$a que de chaines séparées par '. -'-->
             <xsl:for-each
                     select="//mxc:datafield[starts-with(@tag, '34')]/mxc:subfield[@code = 'a']">
-                <xsl:for-each select="tokenize(text(), '.-')">
+                <xsl:for-each select="tokenize(text(), '. -')">
                     <xsl:call-template name="z3XX">
                         <xsl:with-param name="tag" select="'340'"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:for-each>
-            <!-- les zones 360 / 361   génèrent autant de zones 300$a que de chaines séparées par '.-'-->
+            <!-- les zones 360 / 361   génèrent autant de zones 300$a que de chaines séparées par '. -'-->
             <xsl:for-each
                     select="//mxc:datafield[@tag = '360' or @tag = '361']/mxc:subfield[@code = 'a']">
-                <xsl:for-each select="tokenize(text(), '.-')">
+                <xsl:for-each select="tokenize(text(), '. -')">
                     <xsl:call-template name="z3XX">
                         <xsl:with-param name="tag" select="'300'"/>
                     </xsl:call-template>
@@ -188,10 +189,10 @@
                 <xsl:value-of select="//mxc:datafield[@tag = '103']/mxc:subfield[@code = 'b']"/>
             </xsl:variable>
             <xsl:variable name="z103_aDebut">
-                <xsl:value-of select="substring($z103a, 1, 9)"/>
+                <xsl:value-of select="substring($z103a, 1, 10)"/>
             </xsl:variable>
             <xsl:variable name="z103_aFin">
-                <xsl:value-of select="substring($z103a, 10, 9)"/>
+                <xsl:value-of select="substring($z103a, 11, 10)"/>
             </xsl:variable>
             <xsl:variable name="z103_bDebut">
                 <xsl:value-of select="substring($z103b, 1, 6)"/>
@@ -203,28 +204,28 @@
                 <xsl:analyze-string select="$z103_aDebut" regex="\d+">
                     <xsl:matching-substring>
                         <subfield code="a">
-                            <xsl:value-of select="$z103_aDebut"/>
+                            <xsl:value-of select="normalize-space($z103_aDebut)"/>
                         </subfield>
                     </xsl:matching-substring>
                 </xsl:analyze-string>
                 <xsl:analyze-string select="$z103_aFin" regex="\d+">
                     <xsl:matching-substring>
                         <subfield code="b">
-                            <xsl:value-of select="$z103_aFin"/>
+                            <xsl:value-of select="normalize-space($z103_aFin)"/>
                         </subfield>
                     </xsl:matching-substring>
                 </xsl:analyze-string>
                 <xsl:analyze-string select="$z103_bDebut" regex="\d+">
                     <xsl:matching-substring>
                         <subfield code="c">
-                            <xsl:value-of select="$z103_bDebut"/>
+                            <xsl:value-of select="normalize-space($z103_bDebut)"/>
                         </subfield>
                     </xsl:matching-substring>
                 </xsl:analyze-string>
                 <xsl:analyze-string select="$z103_bFin" regex="\d+">
                     <xsl:matching-substring>
                         <subfield code="d">
-                            <xsl:value-of select="$z103_bFin"/>
+                            <xsl:value-of select="normalize-space($z103_bFin)"/>
                         </subfield>
                     </xsl:matching-substring>
                 </xsl:analyze-string>
