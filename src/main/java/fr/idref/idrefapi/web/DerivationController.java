@@ -29,11 +29,12 @@ public class DerivationController {
     @Autowired
     GetDataServices getDataServices;
 
-    @Value("${spring.url.sru}")
-    private String urlSru;
-
     @Value("${spring.urlBnf}")
     private String urlBnf;
+
+
+    @Value("${spring.url.sru}")
+    private String urlSru;
 
     private static final Logger log = LoggerFactory.getLogger(DerivationController.class);
 
