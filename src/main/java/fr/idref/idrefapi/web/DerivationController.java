@@ -53,7 +53,7 @@ public class DerivationController {
      */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/derivation", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String derivationLot(@RequestParam(required = true) String ark, @RequestParam(required = true) String token) throws IOException {
+    public String derivationLot(@RequestParam String ark, @RequestParam String token) throws IOException {
 
         Props p = checkDataServices.populateParam(ark, token);
         log.info("Step 0 param : " + p.toString());
@@ -64,15 +64,38 @@ public class DerivationController {
 
             if (checkDataServices.isSolrExist(solrObj)) {
 
-                derivationControle(token, p);
 
+                String xmlBnf = getDataServices.getXmlBnf(p.getUrlBnf());
+                log.info("Step 2 xml Bnf : " + xmlBnf);
+
+                if (checkDataServices.isBnfExist(xmlBnf)) {
+
+                    String xmlMarc = getDataServices.transformXsl(xmlBnf, token);
+                    log.info("Step 3 xml Marc : " + xmlMarc);
+
+                    String xmlSru = getDataServices.getXmlSru(xmlMarc);
+                    log.info("Step 4 xml Sru  : " + xmlSru);
+
+                    if (checkDataServices.isSruSuccess(xmlSru)) {
+
+                        p.setStatus("OK");
+                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
+                        p.setReponse(xmlSru);
+
+                    } else {
+                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
+                        p.setReponse(xmlSru);
+                    }
+                } else {
+                    p.setMessage("step 3  ERROR  ws bnf error ");
+                }
             } else {
                 p.setMessage("step 2 ERROR  ws solr error ");
             }
         } else {
             log.info("step 1 ERROR : param non valide" + p.getMessage());
 
-         //  p.setMessage("step 1 ERROR : param non valide ");
+            //  p.setMessage("step 1 ERROR : param non valide ");
         }
 
         JSONObject jo = new JSONObject();
@@ -81,7 +104,7 @@ public class DerivationController {
         jo.put("message", p.getMessage());
 
 
-         return jo.toString();
+        return jo.toString();
 
     }
 
@@ -93,29 +116,72 @@ public class DerivationController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/derivationdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String derivationDoublon(@RequestParam(required = true) String ark, @RequestParam(required = true) String token, @RequestParam(required = false) String next) throws IOException {
+    public String derivationDoublon(@RequestParam String ark, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
 
-            Props p = checkDataServices.populateParam(ark, token);
-            log.info("Step 0 param : " + p.toString());
+        Props p = checkDataServices.populateParam(ark, token);
+        log.info("Step 0 param : " + p.toString());
 
-            if (Boolean.TRUE.equals(p.getValide())) {
-                SolrDoublon solrObj = getDataServices.getXmlSolr(p.getUrlSolr());
-                log.info("Step 1  Solr objet : " + solrObj.toString());
+        if (Boolean.TRUE.equals(p.getValide())) {
+            SolrDoublon solrObj = getDataServices.getXmlSolr(p.getUrlSolr());
+            log.info("Step 1  Solr objet : " + solrObj.toString());
 
 
-                 if (checkDataServices.isSolrExist(solrObj) || next.equals("true")) {
-                        derivationControle(token, p);
-                 }
-                  else if (checkDataServices.isSolrDoublon(solrObj)) {
+            if (checkDataServices.isSolrExist(solrObj) || next.equals("true")) {
+                String xmlBnf = getDataServices.getXmlBnf(p.getUrlBnf());
+                log.info("Step 2 xml Bnf : " + xmlBnf);
 
-                         List<String> ppn = checkDataServices.getPpnFromSolr(solrObj);
-                         p.setStatus("doublon");
-                         p.setMessage(join(ppn, "-"));
-                         p.setReponse(ppn.toString());
+                if (checkDataServices.isBnfExist(xmlBnf)) {
 
+                    String xmlMarc = getDataServices.transformXsl(xmlBnf, token);
+                    log.info("Step 3 xml Marc : " + xmlMarc);
+
+                    String xmlSru = getDataServices.getXmlSru(xmlMarc);
+                    log.info("Step 4 xml Sru  : " + xmlSru);
+
+                    if (checkDataServices.isSruSuccess(xmlSru)) {
+
+                        // new step : retrieve notice and write in Xml
+                        log.info("Step 5 xml che ppn  : " + xmlSru);
+
+                        String ppn = checkDataServices.getPpn(xmlSru);
+                        p.setUrlChe(checkDataServices.formatUrlChe(ppn, token));
+
+                        String xmlChe = getDataServices.getXmlSruChe(p.getUrlChe());
+
+                        if (checkDataServices.isSruCheSuccess(xmlChe)) {
+
+                            String record = checkDataServices.getRecord(xmlChe);
+                            String xmlOracle = checkDataServices.formatXmlCheToXmlOracle(record, ppn, p.getLogin());
+                            log.info(xmlOracle);
+                            // concat
+
+
+                            String res = getDataServices.getXmlUpdateOracle(xmlOracle);
+                            log.info(res);
+                        }
+
+                        p.setStatus("OK");
+                        p.setMessage("ppn crée : " + checkDataServices.getLinkPpn(ppn) + "     " + xmlSru);
+                        p.setReponse(xmlSru);
+
+
+                    } else {
+                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
+                        p.setReponse(xmlSru);
+                    }
                 } else {
-                    p.setMessage("step 2 ERROR  ws solr error ");
+                    p.setMessage("step 3  ERROR  ws bnf error ");
                 }
+            } else if (checkDataServices.isSolrDoublon(solrObj)) {
+
+                List<String> ppn = checkDataServices.getPpnFromSolr(solrObj);
+                p.setStatus("doublon");
+                p.setMessage(join(ppn, "-"));
+                p.setReponse(ppn.toString());
+
+            } else {
+                p.setMessage("step 2 ERROR  ws solr error ");
+            }
 
         } else {
             log.info("step 1 ERROR : param non valide" + p.getMessage());
@@ -129,32 +195,6 @@ public class DerivationController {
         return jo.toString();
     }
 
-    private void derivationControle(@RequestParam(required = true) String token, Props p) throws IOException {
-
-        String xmlBnf = getDataServices.getXmlBnf(p.getUrlBnf());
-        log.info("Step 2 xml Bnf : " + xmlBnf);
-
-        if (checkDataServices.isBnfExist(xmlBnf)) {
-
-            String xmlMarc = getDataServices.transformXsl(xmlBnf, token);
-            log.info("Step 3 xml Marc : " + xmlMarc);
-
-            String xmlSru = getDataServices.getXmlSru(xmlMarc);
-            log.info("Step 4 xml Sru  : " + xmlSru);
-
-            if (checkDataServices.isSruSuccess(xmlSru)) {
-                p.setStatus("OK");
-                p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
-                p.setReponse(xmlSru);
-            } else {
-                p.setMessage("Message : " +   checkDataServices.getMessage(xmlSru));
-                p.setReponse(xmlSru);
-            }
-        } else {
-            p.setMessage("step 3  ERROR  ws bnf error ");
-        }
-    }
 }
-
 
 

@@ -32,6 +32,10 @@ public class GetDataServices {
     @Value("${spring.url.sru}")
     private String urlSru;
 
+    @Value("${spring.urlOracle}")
+    private String urlOracle;
+
+
     private RestTemplate restTemplate;
 
     @Autowired
@@ -44,15 +48,28 @@ public class GetDataServices {
     public SolrDoublon getXmlSolr(String url) { return  restTemplate.getForObject(url, SolrDoublon.class); }
     public String getXmlBnf(String url) {return restTemplate.getForObject(url, String.class); }
 
+  //public SruChe getXmlSruChe(String url) {return restTemplate.getForObject(url, SruChe.class); }
+    public String getXmlSruChe(String url) {return restTemplate.getForObject(url, String.class); }
+
+    public String getXmlUpdateOracle(String xml) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+
+        HttpEntity<String> request = new HttpEntity<>(xml, headers);
+        return restTemplate.postForObject(urlOracle, request, String.class);
+    }
+
+
     public String getXmlSru(String xml)
     {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_XML);
 
-
         HttpEntity<String> request = new HttpEntity<>(xml, headers);
         return restTemplate.postForObject(urlSru, request, String.class);
     }
+
+
 
      public String transformXsl(String xml,String token) throws IOException{
 

@@ -12,6 +12,8 @@ public class Props {
     private Boolean isValide;
     private String status;
     private String reponse;
+    private String urlChe;
+    private String login;
 
 
     public String getIsArk() {
@@ -90,6 +92,22 @@ public class Props {
         this.urlSolr = urlSolr;
     }
 
+    public String getUrlChe() {
+        return urlChe;
+    }
+
+    public void setUrlChe(String urlChe) {
+        this.urlChe = urlChe;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public String toString() {
         return "Props{" +
@@ -103,6 +121,8 @@ public class Props {
                 ", isValide=" + isValide +
                 ", status='" + status + '\'' +
                 ", reponse='" + reponse + '\'' +
+                ", urlChe='" + urlChe + '\'' +
+                ", login='" + login + '\'' +
                 '}';
     }
 }
