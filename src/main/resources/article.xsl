@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--     XSL de transformation du marcXml Bnf en marcXml Sudoc. (ERM créé 2020)
-    Objectifs : rendre conforme au marcXml Sudoc :
+    Objectifs :: rendre conforme au marcXml Sudoc :
 
     v200604
   -->
