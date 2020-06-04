@@ -11,9 +11,8 @@
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
     <xsl:param name="token"/>
     <xsl:template match="/">
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                       xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Envelope
+                xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
             <soap:Body>
                 <ucp:updateRequest xmlns:srw="http://www.loc.gov/zing/srw/"
                                    xmlns:ucp="http://www.loc.gov/zing/srw/update/">
@@ -95,7 +94,6 @@
                 </datafield>
             </xsl:for-each>
             <xsl:apply-templates select="//mxc:datafield[@tag = '102']"/>
-            <xsl:apply-templates select="mxc:record/mxc:datafield[@tag = '102']"/>
             <xsl:call-template name="z103"/>
             <xsl:call-template name="z106">
                 <xsl:with-param name="leader09_008" select="$leader09_008"/>
