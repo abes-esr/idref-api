@@ -14,6 +14,7 @@ public class Props {
     private String reponse;
     private String urlChe;
     private String login;
+    private String ppnSru;
 
 
     public String getIsArk() {
@@ -108,6 +109,14 @@ public class Props {
         this.login = login;
     }
 
+    public String getPpnSru() {
+        return ppnSru;
+    }
+
+    public void setPpnSru(String ppnSru) {
+        this.ppnSru = ppnSru;
+    }
+
     @Override
     public String toString() {
         return "Props{" +
@@ -123,6 +132,7 @@ public class Props {
                 ", reponse='" + reponse + '\'' +
                 ", urlChe='" + urlChe + '\'' +
                 ", login='" + login + '\'' +
+                ", ppnSru='" + ppnSru + '\'' +
                 '}';
     }
 }

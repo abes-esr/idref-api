@@ -102,7 +102,7 @@ public class DerivationController {
         jo.put("statut", p.getStatus());
         jo.put("reponse", p.getReponse());
         jo.put("message", p.getMessage());
-
+        jo.put("ppn", p.getPpnSru());
 
         return jo.toString();
 
@@ -160,8 +160,9 @@ public class DerivationController {
                             log.info(res);
                         }
 
+                        p.setPpnSru(checkDataServices.getPpn(xmlSru));
                         p.setStatus("OK");
-                        p.setMessage("ppn crée : " + checkDataServices.getLinkPpn(ppn) + "     " + xmlSru);
+                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
                         p.setReponse(xmlSru);
 
 
@@ -191,7 +192,9 @@ public class DerivationController {
         jo.put("statut", p.getStatus());
         jo.put("reponse", p.getReponse());
         jo.put("message", p.getMessage());
+        jo.put("ppn", p.getPpnSru());
 
+        log.info("json : "  + jo.toString());
         return jo.toString();
     }
 
