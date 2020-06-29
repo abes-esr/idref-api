@@ -160,7 +160,8 @@ public class DerivationController {
                             log.info(res);
                         }
 
-                        p.setPpnSru(checkDataServices.getPpn(xmlSru));
+
+                        p.setPpnSru(ppn);
                         p.setStatus("OK");
                         p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
                         p.setReponse(xmlSru);
