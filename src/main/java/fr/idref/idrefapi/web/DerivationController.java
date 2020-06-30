@@ -83,7 +83,7 @@ public class DerivationController {
                         p.setReponse(xmlSru);
 
                     } else {
-                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
+                        p.setMessage("step 4 ERROR Sru Update error");
                         p.setReponse(xmlSru);
                     }
                 } else {
@@ -168,7 +168,7 @@ public class DerivationController {
 
 
                     } else {
-                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
+                        p.setMessage("step 4 ERROR Sru Update error");
                         p.setReponse(xmlSru);
                     }
                 } else {
