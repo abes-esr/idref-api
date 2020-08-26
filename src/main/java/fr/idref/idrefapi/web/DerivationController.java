@@ -83,7 +83,7 @@ public class DerivationController {
                         p.setReponse(xmlSru);
 
                     } else {
-                        p.setMessage("step 4 ERROR Sru Update error");
+                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
                     }
                 } else {
@@ -95,7 +95,6 @@ public class DerivationController {
         } else {
             log.info("step 1 ERROR : param non valide" + p.getMessage());
 
-            //  p.setMessage("step 1 ERROR : param non valide ");
         }
 
         JSONObject jo = new JSONObject();
@@ -168,7 +167,7 @@ public class DerivationController {
 
 
                     } else {
-                        p.setMessage("step 4 ERROR Sru Update error");
+                        p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
                     }
                 } else {
