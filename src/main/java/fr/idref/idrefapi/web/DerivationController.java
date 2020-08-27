@@ -162,10 +162,8 @@ public class DerivationController {
 
                         p.setPpnSru(ppn);
                         p.setStatus("OK");
-                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
+                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
-
-
                     } else {
                         p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
@@ -177,7 +175,7 @@ public class DerivationController {
 
                 List<String> ppn = checkDataServices.getPpnFromSolr(solrObj);
                 p.setStatus("doublon");
-                p.setMessage(join(ppn, "-"));
+                p.setMessage(join(ppn, " "));
                 p.setReponse(ppn.toString());
 
             } else {
