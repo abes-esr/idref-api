@@ -102,6 +102,7 @@ public class DerivationController {
         jo.put("reponse", p.getReponse());
         jo.put("message", p.getMessage());
         jo.put("ppn", p.getPpnSru());
+        jo.put("date lot", "27/08/2020 14:08");
 
         return jo.toString();
 
@@ -190,6 +191,7 @@ public class DerivationController {
         jo.put("statut", p.getStatus());
         jo.put("reponse", p.getReponse());
         jo.put("message", p.getMessage());
+        jo.put("date doublon", "27/08/2020 14:08");
         jo.put("ppn", p.getPpnSru());
 
         log.info("json : "  + jo.toString());
