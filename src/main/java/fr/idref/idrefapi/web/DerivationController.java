@@ -87,10 +87,10 @@ public class DerivationController {
                         p.setReponse(xmlSru);
                     }
                 } else {
-                    p.setMessage("step 3  ERROR  ws bnf error ");
+                    p.setMessage("step 3 STOP ws sru bnf no result");
                 }
             } else {
-                p.setMessage("step 2 ERROR  ws solr error ");
+                p.setMessage("step 2 STOP ws solrtotal doublon id bnf");
             }
         } else {
             log.info("step 1 ERROR : param non valide" + p.getMessage());
@@ -170,7 +170,7 @@ public class DerivationController {
                         p.setReponse(xmlSru);
                     }
                 } else {
-                    p.setMessage("step 3  ERROR  ws bnf error ");
+                    p.setMessage("step 3 STOP ws sru bnf no result");
                 }
             } else if (checkDataServices.isSolrDoublon(solrObj)) {
 
@@ -180,7 +180,7 @@ public class DerivationController {
                 p.setReponse(ppn.toString());
 
             } else {
-                p.setMessage("step 2 ERROR  ws solr error ");
+                p.setMessage("step 2 STOP ws solrtotal doublon id bnf");
             }
 
         } else {

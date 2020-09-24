@@ -246,7 +246,7 @@ String end = "</srw:recordData>\n" +
         else
         {
             p.setValide(false);
-            p.setMessage("L'ark a un format invalide");
+            p.setMessage("step 1 STOP format invalide id bnf");
         }
 
         return p;
