@@ -79,7 +79,7 @@ public class DerivationController {
                     if (checkDataServices.isSruSuccess(xmlSru)) {
 
                         p.setStatus("OK");
-                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + xmlSru);
+                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "   <br/>   " + xmlSru);
                         p.setReponse(xmlSru);
 
                     } else {
@@ -163,7 +163,7 @@ public class DerivationController {
 
                         p.setPpnSru(ppn);
                         p.setStatus("OK");
-                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "     " + checkDataServices.getMessage(xmlSru));
+                        p.setMessage("ppn crée : " + checkDataServices.getPpn(xmlSru) + "   <br/>   " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
                     } else {
                         p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
