@@ -39,7 +39,7 @@ public class CheckDataServices {
 
     private String formatMessageSru (String message)
     {
-        return message.replaceAll("%27+","'").replaceAll("\\+"," ").replace("%24","$").replace("%CC%81","").replace("%CC%80","").replace("%3B",";");
+        return message.replaceAll("%27+","'").replaceAll("\\+"," ").replace("%24","$").replace("e%CC%81","é").replace("%CC%80","").replace("%3B",";");
     }
 
     public List<String> getPpnFromSolr (SolrDoublon solr)
