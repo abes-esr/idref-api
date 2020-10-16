@@ -517,7 +517,7 @@
             <xsl:variable name="valeur150a" select="'abcdefghuyz'"/>
             <xsl:variable name="valeur150b" select="'01'"/>
             <datafield ind1="#" ind2="#" tag="150">
-                <xsl:if test="string-length($z150b) = 1 and contains($valeur150a, $z150a)">
+                <xsl:if test="string-length($z150a) = 1 and contains($valeur150a, $z150a)">
                     <subfield code="a">
                         <xsl:value-of select="$z150a"/>
                     </subfield>
