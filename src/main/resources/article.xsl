@@ -162,7 +162,7 @@
                     </xsl:call-template>
                 </xsl:for-each>
                 <xsl:for-each select="//mxc:datafield[@tag = '330']">
-                    <datafield ind1="0" ind2="{@ind2}" tag="330">
+                    <datafield ind1="0" ind2="#" tag="330">
                         <xsl:for-each select="mxc:subfield[@code = 'a']/tokenize(text(), '. -')">
                             <subfield code="a">
                                 <xsl:value-of select="normalize-space(.)"/>
@@ -1133,11 +1133,7 @@
     </xsl:template>
     <xsl:template match="mxc:subfield[@code = '8']">
         <xsl:choose>
-            <xsl:when test="./parent::mxc:datafield[starts-with(@tag, '5')]"/>
-            <xsl:when test="text() = 'frefre'"/>
-            <xsl:when test="text() = 'fre   '"/>
-            <xsl:when test="text() = 'fre '"/>
-            <xsl:when test="text() = '|||'"/>
+            <xsl:when test="./parent::mxc:datafield[starts-with(@tag, '5')] or text() = 'frefre' or text() = 'fre   ' or text() = 'fre ' or contains(.,'|||')"/>
             <xsl:otherwise>
                 <subfield code="8">
                     <xsl:value-of select="."/>
