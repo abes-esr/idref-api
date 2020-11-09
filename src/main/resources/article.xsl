@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--     XSL de transformation du marcXml Bnf en marcXml Sudoc. (ERM créé 2020)
     Objectifs : rendre conforme au marcXml Sudoc :
-    v 20201008
+    v 20201109
   -->
 <xsl:stylesheet exclude-result-prefixes="srw mxc xsi xs" version="2.0"
                 xmlns:mxc="info:lc/xmlns/marcxchange-v2" xmlns:srw="http://www.loc.gov/zing/srw/"
@@ -162,7 +162,7 @@
                     </xsl:call-template>
                 </xsl:for-each>
                 <xsl:for-each select="//mxc:datafield[@tag = '330']">
-                    <datafield ind1="0" ind2="{@ind2}" tag="330">
+                    <datafield ind1="0" ind2="#" tag="330">
                         <xsl:for-each select="mxc:subfield[@code = 'a']/tokenize(text(), '. -')">
                             <subfield code="a">
                                 <xsl:value-of select="normalize-space(.)"/>
@@ -1133,11 +1133,7 @@
     </xsl:template>
     <xsl:template match="mxc:subfield[@code = '8']">
         <xsl:choose>
-            <xsl:when test="./parent::mxc:datafield[starts-with(@tag, '5')]"/>
-            <xsl:when test="text() = 'frefre'"/>
-            <xsl:when test="text() = 'fre   '"/>
-            <xsl:when test="text() = 'fre '"/>
-            <xsl:when test="text() = '|||'"/>
+            <xsl:when test="./parent::mxc:datafield[starts-with(@tag, '5')] or text() = 'frefre' or text() = 'fre   ' or text() = 'fre ' or contains(.,'|||')"/>
             <xsl:otherwise>
                 <subfield code="8">
                     <xsl:value-of select="."/>
