@@ -109,9 +109,14 @@
                 <xsl:call-template name="z035"/>
                 <xsl:apply-templates
                         select="mxc:record/mxc:controlfield[not(@tag = '001' or @tag = '003' or @tag = '005')]"/>
-                <xsl:for-each select="//mxc:datafield[@tag = '101'][string-length(normalize-space(mxc:subfield[@code = 'a'][1])) = 3]">
+                <xsl:variable name="test101">
+                    <xsl:for-each select="//mxc:datafield[@tag = '101']/mxc:subfield[@code = 'a']">
+                        <xsl:if test="string-length(normalize-space(.)) = 3">OK</xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:if test="contains($test101, 'OK')">                                        
                     <datafield ind1="#" ind2="#" tag="101">
-                        <xsl:for-each select="mxc:subfield[@code = 'a']">
+                        <xsl:for-each select="//mxc:datafield[@tag = '101']/mxc:subfield[@code = 'a']">                                                                                                                                 
                             <xsl:if test="string-length(normalize-space(.)) = 3">
                                 <xsl:variable name="z101a" select="normalize-space(.)"/>
                                 <xsl:if test="string-length($z101a) = 3">
@@ -119,10 +124,10 @@
                                         <xsl:value-of select="$z101a"/>
                                     </subfield>
                                 </xsl:if>
-                            </xsl:if>
+                            </xsl:if>                                                                                                
                         </xsl:for-each>
-                    </datafield>
-                </xsl:for-each>
+                    </datafield>                    
+                </xsl:if> 
                 <!--ERM le 24/06/20 -->
                 <!--devenu inutile avec le tri pos-traitement
              <xsl:apply-templates select="//mxc:datafield[@tag = '102']"/>-->
