@@ -114,20 +114,18 @@
                         <xsl:if test="string-length(normalize-space(.)) = 3">OK</xsl:if>
                     </xsl:for-each>
                 </xsl:variable>
-                <xsl:if test="contains($test101, 'OK')">                                        
+                <xsl:if test="contains($test101, 'OK')">
                     <datafield ind1="#" ind2="#" tag="101">
-                        <xsl:for-each select="//mxc:datafield[@tag = '101']/mxc:subfield[@code = 'a']">                                                                                                                                 
-                            <xsl:if test="string-length(normalize-space(.)) = 3">
-                                <xsl:variable name="z101a" select="normalize-space(.)"/>
-                                <xsl:if test="string-length($z101a) = 3">
-                                    <subfield code="a">
-                                        <xsl:value-of select="$z101a"/>
-                                    </subfield>
-                                </xsl:if>
-                            </xsl:if>                                                                                                
+                        <xsl:for-each select="//mxc:datafield[@tag = '101']/mxc:subfield[@code = 'a']">
+                            <xsl:if
+                                test="string-length(normalize-space(.)) = 3">
+                                <subfield code="a">
+                                    <xsl:value-of select="."/>
+                                </subfield>
+                            </xsl:if>
                         </xsl:for-each>
-                    </datafield>                    
-                </xsl:if> 
+                    </datafield>
+                </xsl:if>
                 <!--ERM le 24/06/20 -->
                 <!--devenu inutile avec le tri pos-traitement
              <xsl:apply-templates select="//mxc:datafield[@tag = '102']"/>-->
