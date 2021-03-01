@@ -109,19 +109,19 @@
                 <xsl:call-template name="z035"/>
                 <xsl:apply-templates
                         select="mxc:record/mxc:controlfield[not(@tag = '001' or @tag = '003' or @tag = '005')]"/>
-                <xsl:for-each select="//mxc:datafield[@tag = '101']">
-                    <xsl:if test="string-length(normalize-space(mxc:subfield[@code = 'a'])) = 3">
-                        <datafield ind1="#" ind2="#" tag="101">
-                            <xsl:for-each select="mxc:subfield[@code = 'a']">
+                <xsl:for-each select="//mxc:datafield[@tag = '101'][string-length(normalize-space(mxc:subfield[@code = 'a'][1])) = 3]">
+                    <datafield ind1="#" ind2="#" tag="101">
+                        <xsl:for-each select="mxc:subfield[@code = 'a']">
+                            <xsl:if test="string-length(normalize-space(.)) = 3">
                                 <xsl:variable name="z101a" select="normalize-space(.)"/>
                                 <xsl:if test="string-length($z101a) = 3">
                                     <subfield code="a">
                                         <xsl:value-of select="$z101a"/>
                                     </subfield>
                                 </xsl:if>
-                            </xsl:for-each>
-                        </datafield>
-                    </xsl:if>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </datafield>
                 </xsl:for-each>
                 <!--ERM le 24/06/20 -->
                 <!--devenu inutile avec le tri pos-traitement
