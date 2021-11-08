@@ -1,4 +1,4 @@
 # idref-api
 IdRef API
 
-Branch Develop
+WS de création de notice dans le CBS (Sudoc Abes), à partir d'un identifiant ARK (BnF)

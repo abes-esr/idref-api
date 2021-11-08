@@ -184,6 +184,10 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <scm>
+         <connection>scm:git:https://github.com/abes-esr/idref-api.git</connection>
+         <url>https://github.com/abes-esr/idref-api</url>
+    </scm>
 
 </project>
 
