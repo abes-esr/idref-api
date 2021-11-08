@@ -118,7 +118,7 @@
                     <datafield ind1="#" ind2="#" tag="101">
                         <xsl:for-each select="//mxc:datafield[@tag = '101']/mxc:subfield[@code = 'a']">
                             <xsl:if
-                                test="string-length(normalize-space(.)) = 3">
+                                    test="string-length(normalize-space(.)) = 3">
                                 <subfield code="a">
                                     <xsl:value-of select="."/>
                                 </subfield>
