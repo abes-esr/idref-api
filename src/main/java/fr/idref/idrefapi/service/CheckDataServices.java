@@ -137,7 +137,7 @@ public String getRecord(String xml)
 
     private boolean isArk(String ark) {
         boolean isArk = false;
-        String find = "(http|https)://catalogue.bnf.fr/ark:/12148/cb\\d{8,9}[0-9bcdfghjkmnpqrstvwxz]";
+        String find = "(http|https)://(ark|data|catalogue).bnf.fr/ark:/12148/cb\\d{8,9}[0-9bcdfghjkmnpqrstvwxz]";
 
         Pattern p = Pattern.compile(find);
         Matcher m = p.matcher(ark);
@@ -154,13 +154,13 @@ public String getRecord(String xml)
     {
         String recordId = "";
 
-        String find = "(http|https)://catalogue.bnf.fr/ark:/12148/cb(\\d{8,9})[0-9bcdfghjkmnpqrstvwxz]";
+        String find = "(http|https)://(ark|data|catalogue).bnf.fr/ark:/12148/cb(\\d{8,9})[0-9bcdfghjkmnpqrstvwxz]";
 
         Pattern p = Pattern.compile(find);
         Matcher m = p.matcher(ark);
 
         if (m.matches()) {
-            recordId = m.group(2);
+            recordId = m.group(3);
         }
         return recordId;
     }
