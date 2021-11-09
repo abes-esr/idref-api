@@ -498,16 +498,20 @@
                 <subfield code="a">
                     <xsl:value-of select="$z128a"/>
                 </subfield>
-                <xsl:if test="string-length($z128b) = 4">
-                    <subfield code="b">
-                        <xsl:value-of select="$z128b"/>
-                    </subfield>
-                </xsl:if>
-                <xsl:if test="string-length($z128c) = 4">
-                    <subfield code="c">
-                        <xsl:value-of select="$z128c"/>
-                    </subfield>
-                </xsl:if>
+                <xsl:for-each select="$z128b">
+                    <xsl:if test="string-length(text()) = 4">
+                        <subfield code="b">
+                            <xsl:value-of select="text()"/>
+                        </subfield>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$z128c">
+                    <xsl:if test="string-length(text()) = 4">
+                        <subfield code="c">
+                            <xsl:value-of select="text()"/>
+                        </subfield>
+                    </xsl:if>
+                </xsl:for-each>
             </datafield>
         </xsl:if>
     </xsl:template>
