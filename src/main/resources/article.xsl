@@ -85,7 +85,7 @@
                         <xsl:value-of select="concat('T', $leader09_008, '5')"/>
                     </subfield>
                 </datafield>
-                <xsl:for-each select="//mxc:datafield[@tag = '010']">
+                <xsl:for-each select="//mxc:datafield[@tag = '010'][mxc:subfield/@code = 'a']">
                     <datafield ind1="#" ind2="#" tag="010">
                         <xsl:apply-templates select="mxc:subfield[@code = 'a']"/>
                         <xsl:choose>
