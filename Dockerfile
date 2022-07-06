@@ -1,5 +1,5 @@
 ###
-# Image pour la compilation de licencesnationales
+# Image pour la compilation des micro services IdRef API
 FROM maven:3-jdk-11 as build-image
 WORKDIR /build/
 # Installation et configuration de la locale FR
