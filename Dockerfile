@@ -20,7 +20,7 @@ RUN mvn --batch-mode \
         -Duser.timezone=Europe/Paris \
         -Duser.language=fr \
         -f /build/derivation-bnf/pom.xml \
-        package \
+        package
 RUN mvn --batch-mode \
         -Dmaven.test.skip=false \
         -Duser.timezone=Europe/Paris \
