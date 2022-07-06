@@ -5,6 +5,14 @@ services:
     image: abesesr/idref:microservices-derivation-bnf
     container_name: idref-api-derivationBnf
     restart: unless-stopped
+    environment:
+      - URL_BNF=${URL_BNF}
+      - URL_SOLR=${URL_SOLR}
+      - URL_SRU=${URL_SRU}
+      - PATTERN_ARK=${PATTERN_ARK}
+      - PATTERN_RECORDID=${PATTERN_RECORDID}
+      - URL_CHE=${URL_CHE}
+      - URL_ORACLE=${URL_ORACLE}
     ports:
       - ${DERIVATION_BNF_HTTP_PORT:-6085}:8080
     labels:
@@ -17,6 +25,14 @@ services:
     image: abesesr/idref:microservices-derivation-viaf
     container_name: idref-api-derivationViaf
     restart: unless-stopped
+    environment:
+      - URL_BNF=${URL_BNF}
+      - URL_SOLR=${URL_SOLR}
+      - URL_SRU=${URL_SRU}
+      - PATTERN_ARK=${PATTERN_ARK}
+      - PATTERN_RECORDID=${PATTERN_RECORDID}
+      - URL_CHE=${URL_CHE}
+      - URL_ORACLE=${URL_ORACLE}
     ports:
       - ${DERIVATION_VIAF_HTTP_PORT:-6085}:8080
     labels:
