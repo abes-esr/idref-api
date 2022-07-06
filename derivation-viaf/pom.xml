@@ -14,7 +14,7 @@
     <name>derivation-viaf</name>
     <description>WS de derivation IDREF - VIAF </description>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <organization>
         <name>ABES</name>
