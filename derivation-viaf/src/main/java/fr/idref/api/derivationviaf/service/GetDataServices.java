@@ -77,9 +77,8 @@ public class GetDataServices {
          StreamResult result = new StreamResult(writer);
 
          Resource resource = new ClassPathResource("article.xsl");
-         File xslFile = resource.getFile();
 
-         Source xsltSource = new javax.xml.transform.stream.StreamSource(xslFile);
+         Source xsltSource = new javax.xml.transform.stream.StreamSource(resource.getInputStream());
          Source xmlSource = new javax.xml.transform.stream.StreamSource(new StringReader(xml));
 
          TransformerFactory transFact = new TransformerFactoryImpl();
