@@ -49,6 +49,6 @@ jobs:
             docker build . --target derivation-bnf-server -t ${DOCKER_TAG}-derivation-bnf
             docker push ${DOCKER_TAG}-derivation-bnf
             
-            docker build . --target derivation-via-server -t ${DOCKER_TAG}-derivation-viaf
+            docker build . --target derivation-viaf-server -t ${DOCKER_TAG}-derivation-viaf
             docker push ${DOCKER_TAG}-derivation-viaf
           done
