@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.json.XMLTokener.entity;
-
+import org.springframework.core.io.Resource;
 
 @Service
 public class GetDataServices {
@@ -39,18 +38,22 @@ public class GetDataServices {
     @Value("${spring.urlOracle}")
     private String urlOracle;
 
+    @Value("${file.xslt}")
+    private String xslt;
 
     private RestTemplate restTemplate;
+    private final ResourceLoader resourceLoader;
+
 
     @Autowired
     public GetDataServices(RestTemplateBuilder restTemplateBuilder) {
         restTemplate = restTemplateBuilder
                 .errorHandler(new RestTemplateHandler())
                 .build();
+
+        resourceLoader = new DefaultResourceLoader();
     }
 
-    // https://www.wranto.com/2018/03/Spring-RestTemplate-AutoRedirect.html
-    //https://stackoverflow.com/questions/45118609/how-to-map-getbody-array-list-response-of-resttemplate-into-class-in-spring-boot
     public String getIdClusterViaf(String url) {
         Map<String,String> response = restTemplate.getForObject(url, Map.class);
         return response.get("viafID");
@@ -88,7 +91,7 @@ public class GetDataServices {
          StringWriter writer = new StringWriter();
          StreamResult result = new StreamResult(writer);
 
-         Resource resource = new ClassPathResource("article.xsl");
+         Resource  resource = resourceLoader.getResource(xslt);
 
          Source xsltSource = new javax.xml.transform.stream.StreamSource(resource.getInputStream());
          Source xmlSource = new javax.xml.transform.stream.StreamSource(new StringReader(xml));

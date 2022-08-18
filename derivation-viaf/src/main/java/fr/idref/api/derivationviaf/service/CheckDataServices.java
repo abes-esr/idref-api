@@ -19,8 +19,8 @@ import java.util.regex.Pattern;
 @Service
 public class CheckDataServices {
 
-    @Value("${spring.urlSolr}")
-    private String urlSolr;
+    @Value("${spring.urlSolrViaf}")
+    private String urlSolrViaf;
 
     @Value("${spring.urlClusterViaf}")
     private String urlClusterViaf;
@@ -158,18 +158,6 @@ public String getRecord(String xml)
     }
 
 
-
-    public String getIdClusterViaf(String uriClusterViaf)
-    {
-        // TODO get redirect info
-        //  http://www.viaf.org/viaf/sourceID/LC%7Cn%20%2080032817
-        // =>
-        // https://viaf.org/viaf/12341457/
-
-        return "12341457";
-
-    }
-
     public String getIdSourceViaf(String uriSourceViaf)
     {
         String idSourceViaf = "";
@@ -244,7 +232,7 @@ String end = "</srw:recordData>\n" +
 
 
     public String getUrlSolr(String recordId) {
-        return urlSolr.replaceAll("\\*", recordId);
+        return urlSolrViaf.replaceAll("\\*", recordId);
     }
 
     public String getUrlClusterViaf(String idSourceViaf) {

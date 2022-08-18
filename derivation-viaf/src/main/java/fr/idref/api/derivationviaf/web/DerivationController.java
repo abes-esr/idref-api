@@ -43,8 +43,8 @@ public class DerivationController {
 
     /**
      * WS derivation idref :
-     * check data : format ark is valid , id from ark is unique
-     * retrieve xml from bnf by ws bnf
+     * check data : format ark is valid , id from viaf is unique
+     * retrieve xml from viaf by ws bnf
      * transfo xsl
      * insert xml in cbs by ws sru update
      *
@@ -115,7 +115,7 @@ public class DerivationController {
 
     /**
      * WS derivation idref verification ppn en doublon:
-     * check ark , doublon ppn
+     * check viaf , doublon ppn
      */
 
 
