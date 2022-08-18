@@ -4,6 +4,7 @@ import fr.idref.api.derivationviaf.model.Props;
 import fr.idref.api.derivationviaf.model.solr.Doc;
 import fr.idref.api.derivationviaf.model.solr.SolrDoublon;
 import java.util.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,20 +22,24 @@ public class CheckDataServices {
     @Value("${spring.urlSolr}")
     private String urlSolr;
 
-    @Value("${spring.urlBnf}")
-    private String urlBnf;
+    @Value("${spring.urlClusterViaf}")
+    private String urlClusterViaf;
 
     @Value("${spring.urlChe}")
     private String urlChe;
 
+
+
     private static final Logger log = LoggerFactory.getLogger(CheckDataServices.class);
 
 
-    public boolean isBnfExist(String notice)        {return notice.contains("<srw:numberOfRecords>1</srw:numberOfRecords>");}
+    public boolean isViafExist(String notice, String idSourceViaf)        {return notice.contains("<mx:controlfield tag=\"001\">"+idSourceViaf+"</mx:controlfield>");}
     public boolean isSruSuccess(String notice)      {return notice.contains("<operationStatus>success</operationStatus>");}
     public boolean isSruCheSuccess(String xml)      {return xml.contains("numberOfRecords>1</numberOfRecords>");}
 
-    public boolean isSolrExist(SolrDoublon solr)    {return (solr.getResponse().getNumFound() == 0);}
+    // TODO get value numfound in json solr
+    public boolean isSolrExist(SolrDoublon solr)    {return (solr.getAdditionalProperties().containsKey("result"));}
+
     public boolean isSolrDoublon(SolrDoublon solr)  {return (solr.getResponse() != null && solr.getResponse().getNumFound() > 0);}
 
     private String formatMessageSru (String message)
@@ -112,7 +117,7 @@ public String getRecord(String xml)
 
     }
 
-    private String getLogin(String token)
+    public String getLogin(String token)
     {
         String[] tmp = token.split("/");
         String loginClear = "";
@@ -137,34 +142,49 @@ public String getRecord(String xml)
     }
 
 
-    private boolean isArk(String ark) {
-        boolean isArk = false;
-        String find = "(http|https)://(ark|data|catalogue).bnf.fr/ark:/12148/cb\\d{8,9}[0-9bcdfghjkmnpqrstvwxz]";
+    public boolean isUriSourceViaf(String uriSourceViaf) {
+        boolean isUriSourceViaf = false;
+
+        // https://viaf.org/processed/LC|n  80032817
+        String find = "(http|https)://(viaf.org/processed)/(.*)";
 
         Pattern p = Pattern.compile(find);
-        Matcher m = p.matcher(ark);
+        Matcher m = p.matcher(uriSourceViaf);
 
         if (m.matches() ) {
-            isArk = true;
+            isUriSourceViaf = true;
         }
-
-        return isArk;
+        return isUriSourceViaf;
     }
 
 
-    private String getRecordId(String ark)
-    {
-        String recordId = "";
 
-        String find = "(http|https)://(ark|data|catalogue).bnf.fr/ark:/12148/cb(\\d{8,9})[0-9bcdfghjkmnpqrstvwxz]";
+    public String getIdClusterViaf(String uriClusterViaf)
+    {
+        // TODO get redirect info
+        //  http://www.viaf.org/viaf/sourceID/LC%7Cn%20%2080032817
+        // =>
+        // https://viaf.org/viaf/12341457/
+
+        return "12341457";
+
+    }
+
+    public String getIdSourceViaf(String uriSourceViaf)
+    {
+        String idSourceViaf = "";
+
+       // https://viaf.org/processed/LC|n  80032817
+        String find = "(http|https)://(viaf.org/processed)/(.*)";
 
         Pattern p = Pattern.compile(find);
-        Matcher m = p.matcher(ark);
+        Matcher m = p.matcher(uriSourceViaf);
 
         if (m.matches()) {
-            recordId = m.group(3);
+            idSourceViaf = m.group(3);
         }
-        return recordId;
+
+        return idSourceViaf;
     }
 
     public String formatUrlChe(String ppn, String token)
@@ -223,44 +243,53 @@ String end = "</srw:recordData>\n" +
     }
 
 
-    private String getUrlSolr(String recordId) {
-        return urlSolr.replaceAll("\\?\\*", recordId + "*");
+    public String getUrlSolr(String recordId) {
+        return urlSolr.replaceAll("\\*", recordId);
     }
 
-    private String getUrlBnf(String recordId) {
-        return urlBnf.replaceAll("\\*\\?\\*",recordId);
+    public String getUrlClusterViaf(String idSourceViaf) {
+
+        return urlClusterViaf.replaceAll("\\*",idSourceViaf);
     }
 
-    public Props populateParam(String ark, String token)
+
+/*
+    public Props populateParam(String uriSourceViaf, String token)
     {
         Props p =  new Props();
-
-        p.setArk(ark);
         p.setToken(token);
         p.setStatus("KO");
         p.setReponse("vide");
         p.setLogin(getLogin(token));
 
-        if (isArk(ark))
+        if (isUriSourceViaf(uriSourceViaf))
         {
-            p.setIsArk(isArk(ark));
+            //  get info from source viaf : uri et id
+            String idSourceViaf = getIdSourceViaf(uriSourceViaf);
+            p.setUriSourceViaf(uriSourceViaf);
+            p.setIdSourceViaf(idSourceViaf);
+            p.setUriSourceViafXml(uriSourceViaf + "?httpAccept=text/xml");
 
-            String  recordId = getRecordId(ark);
+            //  get info from cluster viaf : uri et id
+            p.setUriClusterViaf(getUrlClusterViaf(idSourceViaf));
+            // TODO test not null getUrlClusterViaf(idSourceViaf)
+            String idClusterViaf = getIdClusterViaf(p.getUriClusterViaf());
+            p.setIdClusterViaf(idClusterViaf);
 
-            p.setRecordId(recordId);
-            p.setUrlBnf(getUrlBnf(recordId));
-            p.setUrlSolr(getUrlSolr(recordId));
+            p.setUrlSolr(getUrlSolr(idClusterViaf));
             p.setValide(true);
 
         }
         else
         {
             p.setValide(false);
-            p.setMessage("step 1 STOP format invalide id bnf");
+            p.setMessage("step 1 STOP format invalide uri source viaf");
         }
 
         return p;
     }
+*/
+
 
 }
 

@@ -4,6 +4,7 @@ import fr.idref.api.derivationviaf.model.solr.SolrDoublon;
 import fr.idref.api.derivationviaf.service.CheckDataServices;
 import fr.idref.api.derivationviaf.service.GetDataServices;
 import fr.idref.api.derivationviaf.model.Props;
+import fr.idref.api.derivationviaf.service.PopulateServices;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.join;
@@ -29,8 +31,8 @@ public class DerivationController {
     @Autowired
     GetDataServices getDataServices;
 
-    @Value("${spring.urlBnf}")
-    private String urlBnf;
+    @Autowired
+    PopulateServices populateServices;
 
 
     @Value("${spring.url.sru}")
@@ -51,6 +53,7 @@ public class DerivationController {
      * @return
      * @throws IOException
      */
+    /*
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/derivation", produces = MediaType.APPLICATION_JSON_VALUE)
     public String derivationLot(@RequestParam String ark, @RequestParam String token) throws IOException {
@@ -108,35 +111,39 @@ public class DerivationController {
 
     }
 
+*/
 
     /**
      * WS derivation idref verification ppn en doublon:
      * check ark , doublon ppn
      */
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/derivationdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String derivationDoublon(@RequestParam String ark, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
 
-        Props p = checkDataServices.populateParam(ark, token);
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/derivationviafdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String derivationDoublon(@RequestParam String urisourceviaf, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
+
+        urisourceviaf = "https://viaf.org/processed/LC|n  80032817";
+        Props p = populateServices.populateParam(urisourceviaf, token);
         log.info("Step 0 param : " + p.toString());
 
         if (Boolean.TRUE.equals(p.getValide())) {
             SolrDoublon solrObj = getDataServices.getXmlSolr(p.getUrlSolr());
             log.info("Step 1  Solr objet : " + solrObj.toString());
 
-
+// TODO check isSolrExist
             if (checkDataServices.isSolrExist(solrObj) || next.equals("true")) {
-                String xmlBnf = getDataServices.getXmlBnf(p.getUrlBnf());
-                log.info("Step 2 xml Bnf : " + xmlBnf);
+                String xmlViaf = getDataServices.getXmlViaf(p.getUriSourceViafXml());
+                log.info("Step 2 xml Viaf : " + xmlViaf);
 
-                if (checkDataServices.isBnfExist(xmlBnf)) {
+                if (checkDataServices.isViafExist(xmlViaf, p.getIdSourceViaf())) {
 
-                    String xmlMarc = getDataServices.transformXsl(xmlBnf, token);
+                    String xmlMarc = getDataServices.transformXsl(xmlViaf, token);
                     log.info("Step 3 xml Marc : " + xmlMarc);
 
                     String xmlSru = getDataServices.getXmlSru(xmlMarc);
                     log.info("Step 4 xml Sru  : " + xmlSru);
+
 
                     if (checkDataServices.isSruSuccess(xmlSru)) {
 
@@ -156,8 +163,9 @@ public class DerivationController {
                             // concat
 
 
-                            String res = getDataServices.getXmlUpdateOracle(xmlOracle);
-                            log.info(res);
+                     //       String res = getDataServices.getXmlUpdateOracle(xmlOracle);
+                    //       log.info(res);
+
                         }
 
 
@@ -169,6 +177,7 @@ public class DerivationController {
                         p.setMessage("Message : " + checkDataServices.getMessage(xmlSru));
                         p.setReponse(xmlSru);
                     }
+
                 } else {
                     p.setMessage("step 3 STOP ws sru bnf no result");
                 }
@@ -180,7 +189,7 @@ public class DerivationController {
                 p.setReponse(ppn.toString());
 
             } else {
-                p.setMessage("step 2 STOP ws solrtotal doublon id bnf");
+                p.setMessage("step 2 STOP ws solrtotal doublon id viaf");
             }
 
         } else {
@@ -191,7 +200,7 @@ public class DerivationController {
         jo.put("statut", p.getStatus());
         jo.put("reponse", p.getReponse());
         jo.put("message", p.getMessage());
-        jo.put("date doublon", "27/08/2020 14:08");
+        jo.put("date doublon", new Date());
         jo.put("ppn", p.getPpnSru());
 
         log.info("json : "  + jo.toString());

@@ -1,6 +1,8 @@
 package fr.idref.api.derivationviaf.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import fr.idref.api.derivationviaf.handler.RestTemplateHandler;
+import fr.idref.api.derivationviaf.model.Entries;
 import fr.idref.api.derivationviaf.model.solr.SolrDoublon;
 import net.sf.saxon.TransformerFactoryImpl;
 import org.slf4j.Logger;
@@ -10,18 +12,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static org.json.XMLTokener.entity;
 
 
 @Service
@@ -45,8 +49,16 @@ public class GetDataServices {
                 .build();
     }
 
+    // https://www.wranto.com/2018/03/Spring-RestTemplate-AutoRedirect.html
+    //https://stackoverflow.com/questions/45118609/how-to-map-getbody-array-list-response-of-resttemplate-into-class-in-spring-boot
+    public String getIdClusterViaf(String url) {
+        Map<String,String> response = restTemplate.getForObject(url, Map.class);
+        return response.get("viafID");
+    }
+
+
     public SolrDoublon getXmlSolr(String url) { return  restTemplate.getForObject(url, SolrDoublon.class); }
-    public String getXmlBnf(String url) {return restTemplate.getForObject(url, String.class); }
+    public String getXmlViaf(String url) {return restTemplate.getForObject(url, String.class); }
 
   //public SruChe getXmlSruChe(String url) {return restTemplate.getForObject(url, SruChe.class); }
     public String getXmlSruChe(String url) {return restTemplate.getForObject(url, String.class); }

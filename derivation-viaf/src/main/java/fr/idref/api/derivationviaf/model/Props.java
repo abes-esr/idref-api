@@ -2,12 +2,18 @@ package fr.idref.api.derivationviaf.model;
 
 public class Props {
 
-    private String ark;
+    private String uriSourceViaf;
+    private String uriClusterViaf;
+    private String uriSourceViafXml;
+    private String idSourceViaf;
+    private String idClusterViaf;
+
+
     private String token;
     private String recordId;
-    private String urlBnf;
+
     private String urlSolr;
-    private Boolean isArk;
+
     private String message;
     private Boolean isValide;
     private String status;
@@ -16,13 +22,89 @@ public class Props {
     private String login;
     private String ppnSru;
 
-
-    public String getIsArk() {
-        return ark;
+    @Override
+    public String toString() {
+        return "Props{" +
+                "uriSourceViaf='" + uriSourceViaf  + '\'' +
+                ",\n uriClusterViaf='" + uriClusterViaf + '\'' +
+                ",\n uriSourceViafXml='" + uriSourceViafXml + '\'' +
+                ",\n idSourceViaf='" + idSourceViaf + '\'' +
+                ",\n idClusterViaf='" + idClusterViaf + '\'' +
+                ",\n token='" + token + '\'' +
+                ",\n recordId='" + recordId + '\'' +
+                ",\n urlSolr='" + urlSolr + '\'' +
+                ",\n message='" + message + '\'' +
+                ",\n isValide=" + isValide +
+                ",\n status='" + status + '\'' +
+                ",\n reponse='" + reponse + '\'' +
+                ",\n urlChe='" + urlChe + '\'' +
+                ",\n login='" + login + '\'' +
+                ",\n ppnSru='" + ppnSru + '\'' +
+                '}';
     }
 
-    public void setIsArk(Boolean ark) {
-        isArk = ark;
+    public String getUriSourceViafXml() {
+        return uriSourceViafXml;
+    }
+
+    public void setUriSourceViafXml(String uriSourceViafXml) {
+        this.uriSourceViafXml = uriSourceViafXml;
+    }
+
+    public String getUriSourceViaf() {
+        return uriSourceViaf;
+    }
+
+    public void setUriSourceViaf(String uriSourceViaf) {
+        this.uriSourceViaf = uriSourceViaf;
+    }
+
+    public String getUriClusterViaf() {
+        return uriClusterViaf;
+    }
+
+    public void setUriClusterViaf(String uriClusterViaf) {
+        this.uriClusterViaf = uriClusterViaf;
+    }
+
+    public String getIdSourceViaf() {
+        return idSourceViaf;
+    }
+
+    public void setIdSourceViaf(String idSourceViaf) {
+        this.idSourceViaf = idSourceViaf;
+    }
+
+    public String getIdClusterViaf() {
+        return idClusterViaf;
+    }
+
+    public void setIdClusterViaf(String idClusterViaf) {
+        this.idClusterViaf = idClusterViaf;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
+
+    public String getUrlSolr() {
+        return urlSolr;
+    }
+
+    public void setUrlSolr(String urlSolr) {
+        this.urlSolr = urlSolr;
     }
 
     public String getMessage() {
@@ -49,48 +131,12 @@ public class Props {
         this.status = status;
     }
 
-    public void setArk(String ark) {
-        this.ark = ark;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getRecordId() {
-        return recordId;
-    }
-
-    public void setRecordId(String recordId) {
-        this.recordId = recordId;
-    }
-
-    public String getUrlBnf() {
-        return urlBnf;
-    }
-
-    public void setUrlBnf(String urlBnf) {
-        this.urlBnf = urlBnf;
-    }
-
-    public String getUrlSolr() {
-        return urlSolr;
-    }
-
     public String getReponse() {
         return reponse;
     }
 
     public void setReponse(String reponse) {
         this.reponse = reponse;
-    }
-
-    public void setUrlSolr(String urlSolr) {
-        this.urlSolr = urlSolr;
     }
 
     public String getUrlChe() {
@@ -117,22 +163,4 @@ public class Props {
         this.ppnSru = ppnSru;
     }
 
-    @Override
-    public String toString() {
-        return "Props{" +
-                "ark='" + ark + '\'' +
-                ", token='" + token + '\'' +
-                ", recordId='" + recordId + '\'' +
-                ", urlBnf='" + urlBnf + '\'' +
-                ", urlSolr='" + urlSolr + '\'' +
-                ", isArk=" + isArk +
-                ", message='" + message + '\'' +
-                ", isValide=" + isValide +
-                ", status='" + status + '\'' +
-                ", reponse='" + reponse + '\'' +
-                ", urlChe='" + urlChe + '\'' +
-                ", login='" + login + '\'' +
-                ", ppnSru='" + ppnSru + '\'' +
-                '}';
-    }
 }
