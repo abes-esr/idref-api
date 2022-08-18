@@ -7,10 +7,10 @@ services:
     restart: unless-stopped
     environment:
       - URL_BNF=${URL_BNF}
-      - URL_SOLR=${URL_SOLR}
-      - URL_SRU=${URL_SRU}
+      - URL_SOLR_BNF=${URL_SOLR_BNF}
       - PATTERN_ARK=${PATTERN_ARK}
-      - PATTERN_RECORDID=${PATTERN_RECORDID}
+      - PATTERN_RECORDID_BNF=${PATTERN_RECORDID_BNF}
+      - URL_SRU=${URL_SRU}
       - URL_CHE=${URL_CHE}
       - URL_ORACLE=${URL_ORACLE}
     ports:
@@ -29,11 +29,11 @@ services:
     container_name: idref-api-derivationViaf
     restart: unless-stopped
     environment:
-      - URL_BNF=${URL_BNF}
-      - URL_SOLR=${URL_SOLR}
+      - URL_VIAF=${URL_VIAF}
+      - URL_SOLR_VIAF=${URL_SOLR_VIAF}
+      - PATTERN_VIAF=${PATTERN_VIAF}
+      - PATTERN_RECORDID_VIAF=${PATTERN_RECORDID_VIAF}
       - URL_SRU=${URL_SRU}
-      - PATTERN_ARK=${PATTERN_ARK}
-      - PATTERN_RECORDID=${PATTERN_RECORDID}
       - URL_CHE=${URL_CHE}
       - URL_ORACLE=${URL_ORACLE}
     ports:
