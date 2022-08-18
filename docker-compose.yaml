@@ -20,6 +20,9 @@ services:
       - "co.elastic.logs/enabled=true"
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=idref-api-derivationBnf"
+      # pour que les mises à jour de cette image soient auto-déployées
+      # par watchtower cf docker-compose.watchtower.yml
+      - "com.centurylinklabs.watchtower.scope=idref-api-watchtower-scope"
 
   idref-api-derivationViaf:
     image: abesesr/idref:microservices-derivation-viaf
@@ -40,3 +43,34 @@ services:
       - "co.elastic.logs/enabled=true"
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=idref-api-derivationViaf"
+      # pour que les mises à jour de cette image soient auto-déployées
+      # par watchtower cf docker-compose.watchtower.yml
+      - "com.centurylinklabs.watchtower.scope=idref-api-watchtower-scope"
+
+  #######################################
+  # idref-api-watchtower
+  # Conteneur chargé de mettre à jour automatiquement toutes les 10 secondes
+  # les images docker des conteneurs idref-api-* (passés en paramètre)
+  # cela permet de faire du déploiement continue en attendant les déploiement Ansible
+  # ce conteneur devra donc être supprimé une fois que le déploiement Ansible sera en place
+  # plus d'info : https://containrrr.dev/watchtower
+  idref-api-watchtower:
+    image: containrrr/watchtower:1.4.0
+    container_name: idref-api-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: 60
+      WATCHTOWER_DEBUG: "false"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
+      WATCHTOWER_RUN_ONCE: ${IDREF_API_WATCHTOWER_RUN_ONCE}
+      WATCHTOWER_NOTIFICATIONS: "slack"
+      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${IDREF_API_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${IDREF_API_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-idref"
+      WATCHTOWER_SCOPE: "idref-api-watchtower-scope"
+    labels:
+      - "com.centurylinklabs.watchtower.scope=idref-api-watchtower-scope"
