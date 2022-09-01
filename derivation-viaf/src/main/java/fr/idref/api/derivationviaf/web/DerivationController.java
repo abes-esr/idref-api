@@ -123,7 +123,7 @@ public class DerivationController {
     @RequestMapping(value = "/derivationviafdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
     public String derivationDoublon(@RequestParam String urisourceviaf, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
 
-        urisourceviaf = "https://viaf.org/processed/LC|n  80032817";
+        //urisourceviaf = "https://viaf.org/processed/LC|n  80032817";
         Props p = populateServices.populateParam(urisourceviaf, token);
         log.info("Step 0 param : " + p.toString());
 
