@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import org.springframework.core.io.Resource;
 
 @Service
 public class GetDataServices {
@@ -35,14 +35,19 @@ public class GetDataServices {
     @Value("${spring.urlOracle}")
     private String urlOracle;
 
+    @Value("${file.xslt.bnf}")
+    private String xslt;
 
     private RestTemplate restTemplate;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
     public GetDataServices(RestTemplateBuilder restTemplateBuilder) {
         restTemplate = restTemplateBuilder
                 .errorHandler(new RestTemplateHandler())
                 .build();
+
+        resourceLoader = new DefaultResourceLoader();
     }
 
     public SolrDoublon getXmlSolr(String url) { return  restTemplate.getForObject(url, SolrDoublon.class); }
@@ -76,7 +81,7 @@ public class GetDataServices {
          StringWriter writer = new StringWriter();
          StreamResult result = new StreamResult(writer);
 
-         Resource resource = new ClassPathResource("article.xsl");
+         Resource  resource = resourceLoader.getResource(xslt);
 
          Source xsltSource = new javax.xml.transform.stream.StreamSource(resource.getInputStream());
          Source xmlSource = new javax.xml.transform.stream.StreamSource(new StringReader(xml));
