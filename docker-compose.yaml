@@ -13,6 +13,7 @@ services:
       - URL_SRU=${URL_SRU}
       - URL_CHE=${URL_CHE}
       - URL_ORACLE=${URL_ORACLE}
+      - URL_XSLTBNF=${URL_XSLTBNF}
     ports:
       - ${DERIVATION_BNF_HTTP_PORT:-6085}:8080
     labels:
