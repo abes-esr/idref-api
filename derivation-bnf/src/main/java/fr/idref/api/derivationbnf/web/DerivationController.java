@@ -156,8 +156,8 @@ public class DerivationController {
                             // concat
 
 
-                            String res = getDataServices.getXmlUpdateOracle(xmlOracle);
-                            log.info(res);
+                         String res = getDataServices.getXmlUpdateOracle(xmlOracle);
+                          log.info(res);
                         }
 
 

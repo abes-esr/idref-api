@@ -123,7 +123,6 @@ public class DerivationController {
     @RequestMapping(value = "/derivationviafdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
     public String derivationDoublon(@RequestParam String urisourceviaf, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
 
-        //urisourceviaf = "https://viaf.org/processed/LC|n  80032817";
         Props p = populateServices.populateParam(urisourceviaf, token);
         log.info("Step 0 param : " + p.toString());
 
@@ -138,7 +137,7 @@ public class DerivationController {
 
                 if (checkDataServices.isViafExist(xmlViaf, p.getIdSourceViaf())) {
 
-                    String xmlMarc = getDataServices.transformXsl(xmlViaf, token);
+                    String xmlMarc = getDataServices.transformXsl(xmlViaf, token, p);
                     log.info("Step 3 xml Marc : " + xmlMarc);
 
                     String xmlSru = getDataServices.getXmlSru(xmlMarc);
@@ -162,9 +161,8 @@ public class DerivationController {
                             log.info(xmlOracle);
                             // concat
 
-
-                     //       String res = getDataServices.getXmlUpdateOracle(xmlOracle);
-                    //       log.info(res);
+                       String res = getDataServices.getXmlUpdateOracle(xmlOracle);
+                       log.info(res);
 
                         }
 
@@ -179,7 +177,7 @@ public class DerivationController {
                     }
 
                 } else {
-                    p.setMessage("step 3 STOP ws sru bnf no result");
+                    p.setMessage("step 3 STOP ws sru Viaf no result");
                 }
             } else if (checkDataServices.isSolrDoublon(solrObj)) {
 

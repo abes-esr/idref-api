@@ -21,26 +21,12 @@ public class Props {
     private String urlChe;
     private String login;
     private String ppnSru;
+    private String urlXslt;
+
 
     @Override
     public String toString() {
-        return "Props{" +
-                "uriSourceViaf='" + uriSourceViaf  + '\'' +
-                ",\n uriClusterViaf='" + uriClusterViaf + '\'' +
-                ",\n uriSourceViafXml='" + uriSourceViafXml + '\'' +
-                ",\n idSourceViaf='" + idSourceViaf + '\'' +
-                ",\n idClusterViaf='" + idClusterViaf + '\'' +
-                ",\n token='" + token + '\'' +
-                ",\n recordId='" + recordId + '\'' +
-                ",\n urlSolr='" + urlSolr + '\'' +
-                ",\n message='" + message + '\'' +
-                ",\n isValide=" + isValide +
-                ",\n status='" + status + '\'' +
-                ",\n reponse='" + reponse + '\'' +
-                ",\n urlChe='" + urlChe + '\'' +
-                ",\n login='" + login + '\'' +
-                ",\n ppnSru='" + ppnSru + '\'' +
-                '}';
+        return "Props{" + "uriSourceViaf='" + uriSourceViaf + '\'' + ",\n uriClusterViaf='" + uriClusterViaf + '\'' + ",\n uriSourceViafXml='" + uriSourceViafXml + '\'' + ",\n idSourceViaf='" + idSourceViaf + '\'' + ",\n idClusterViaf='" + idClusterViaf + '\'' + ",\n token='" + token + '\'' + ",\n recordId='" + recordId + '\'' + ",\n urlSolr='" + urlSolr + '\'' + ",\n message='" + message + '\'' + ",\n isValide=" + isValide + ",\n status='" + status + '\'' + ",\n reponse='" + reponse + '\'' + ",\n urlChe='" + urlChe + '\'' + ",\n login='" + login + '\'' + ",\n ppnSru='" + ppnSru + '\'' + ",\n urlXslt='" + urlXslt + '\'' + '}';
     }
 
     public String getUriSourceViafXml() {
@@ -163,4 +149,11 @@ public class Props {
         this.ppnSru = ppnSru;
     }
 
+    public String getUrlXslt() {
+        return urlXslt;
+    }
+
+    public void setUrlXslt(String urlXslt) {
+        this.urlXslt = urlXslt;
+    }
 }

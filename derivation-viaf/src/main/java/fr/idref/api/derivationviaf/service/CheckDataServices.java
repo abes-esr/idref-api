@@ -28,6 +28,11 @@ public class CheckDataServices {
     @Value("${spring.urlChe}")
     private String urlChe;
 
+    @Value("${file.xslt.viaf.marc}")
+    private String xsltMarc;
+
+    @Value("${file.xslt.viaf.unimarc}")
+    private String xsltUnimarc;
 
 
     private static final Logger log = LoggerFactory.getLogger(CheckDataServices.class);
@@ -80,6 +85,20 @@ public String getMessage(String xml)
     res = formatMessageSru(res);
     return res;
 }
+
+    public String getUrlXslt(String uriSourceViaf)
+    {
+        String urlXslt =  xsltUnimarc;
+        String find = "(GRATEVE|ICCU|LIH|PTBNP|BNF)";
+
+        Pattern p = Pattern.compile(find);
+        Matcher m = p.matcher(uriSourceViaf);
+
+        if (m.find() ) {
+            urlXslt = xsltMarc;
+        }
+        return urlXslt;
+    }
 
 
 
@@ -145,7 +164,7 @@ public String getRecord(String xml)
     public boolean isUriSourceViaf(String uriSourceViaf) {
         boolean isUriSourceViaf = false;
 
-        // https://viaf.org/processed/LC|n  80032817
+
         String find = "(http|https)://(viaf.org/processed)/(.*)";
 
         Pattern p = Pattern.compile(find);

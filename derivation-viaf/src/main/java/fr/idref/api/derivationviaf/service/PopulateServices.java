@@ -34,6 +34,8 @@ public class PopulateServices {
             p.setIdSourceViaf(idSourceViaf);
             p.setUriSourceViafXml(uriSourceViaf + "?httpAccept=text/xml");
 
+            p.setUrlXslt(checkServices.getUrlXslt(uriSourceViaf));
+
             //  get info from cluster viaf : uri et id
             p.setUriClusterViaf(checkServices.getUrlClusterViaf(idSourceViaf));
 

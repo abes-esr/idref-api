@@ -3,6 +3,7 @@ package fr.idref.api.derivationviaf.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import fr.idref.api.derivationviaf.handler.RestTemplateHandler;
 import fr.idref.api.derivationviaf.model.Entries;
+import fr.idref.api.derivationviaf.model.Props;
 import fr.idref.api.derivationviaf.model.solr.SolrDoublon;
 import net.sf.saxon.TransformerFactoryImpl;
 import org.slf4j.Logger;
@@ -37,9 +38,6 @@ public class GetDataServices {
 
     @Value("${spring.urlOracle}")
     private String urlOracle;
-
-    @Value("${file.xslt}")
-    private String xslt;
 
     private RestTemplate restTemplate;
     private final ResourceLoader resourceLoader;
@@ -86,12 +84,13 @@ public class GetDataServices {
 
 
 
-     public String transformXsl(String xml,String token) throws IOException{
+     public String transformXsl(String xml,String token, Props p) throws IOException{
 
          StringWriter writer = new StringWriter();
          StreamResult result = new StreamResult(writer);
 
-         Resource  resource = resourceLoader.getResource(xslt);
+         Resource  resource = resourceLoader.getResource(p.getUrlXslt());
+
 
          Source xsltSource = new javax.xml.transform.stream.StreamSource(resource.getInputStream());
          Source xmlSource = new javax.xml.transform.stream.StreamSource(new StringReader(xml));
@@ -100,6 +99,7 @@ public class GetDataServices {
          try {
              Transformer trans = transFact.newTransformer(xsltSource);
              trans.setParameter("token", token);
+         //    trans.setParameter("idviaf", p. getIdClusterViaf());
              trans.transform(xmlSource, result);
          } catch (TransformerConfigurationException e) {
              e.printStackTrace();
