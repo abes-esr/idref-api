@@ -178,7 +178,7 @@ public class DerivationController {
                     }
 
                 } else {
-                    p.setMessage("step 3 STOP ws sru Viaf no result");
+                    p.setMessage("step 3 STOP ws api Viaf no result");
                 }
             } else if (checkDataServices.isSolrDoublon(solrObj)) {
 
