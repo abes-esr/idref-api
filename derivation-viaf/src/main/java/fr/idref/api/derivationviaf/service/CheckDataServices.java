@@ -88,14 +88,14 @@ public String getMessage(String xml)
 
     public String getUrlXslt(String uriSourceViaf)
     {
-        String urlXslt =  xsltUnimarc;
+        String urlXslt =  xsltMarc;
         String find = "(GRATEVE|ICCU|LIH|PTBNP|BNF)";
 
         Pattern p = Pattern.compile(find);
         Matcher m = p.matcher(uriSourceViaf);
 
         if (m.find() ) {
-            urlXslt = xsltMarc;
+            urlXslt =xsltUnimarc;
         }
         return urlXslt;
     }

@@ -123,6 +123,8 @@ public class DerivationController {
     @RequestMapping(value = "/derivationviafdoublon", produces = MediaType.APPLICATION_JSON_VALUE)
     public String derivationDoublon(@RequestParam String urisourceviaf, @RequestParam String token, @RequestParam(required = false) String next) throws IOException {
 
+
+
         Props p = populateServices.populateParam(urisourceviaf, token);
         log.info("Step 0 param : " + p.toString());
 
@@ -161,11 +163,10 @@ public class DerivationController {
                             log.info(xmlOracle);
                             // concat
 
-                       String res = getDataServices.getXmlUpdateOracle(xmlOracle);
-                       log.info(res);
+           //            String res = getDataServices.getXmlUpdateOracle(xmlOracle);
+           //            log.info(res);
 
                         }
-
 
                         p.setPpnSru(ppn);
                         p.setStatus("OK");
