@@ -99,7 +99,7 @@ public class GetDataServices {
          try {
              Transformer trans = transFact.newTransformer(xsltSource);
              trans.setParameter("token", token);
-           //  trans.setParameter("idviaf", p. getIdClusterViaf());
+             trans.setParameter("idviaf", p.getIdClusterViaf());
              trans.transform(xmlSource, result);
          } catch (TransformerConfigurationException e) {
              e.printStackTrace();
