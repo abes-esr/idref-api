@@ -9,7 +9,7 @@
     </parent>
     <groupId>fr.idref.api</groupId>
     <artifactId>derivation-bnf</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>derivation-bnf</name>
     <description>WS de derivation IDREF - BNF </description>
 
@@ -147,7 +147,7 @@
     <scm>
          <connection>scm:git:https://github.com/abes-esr/idref-api.git</connection>
          <url>https://github.com/abes-esr/idref-api</url>
-      <tag>0.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
 </project>
