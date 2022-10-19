@@ -49,13 +49,14 @@ jobs:
           # - pousser le tout sur le dépôt github
           git config --global user.email "github-action@noreply"
           git config --global user.name "Github Action"
-          mvn initialize
+          mvn initialize -f /derivation-bnf/pom.xml
           mvn release:prepare \
             --batch-mode \
             -DreleaseVersion=$NEW_TAG \
             -Darguments=-DskipTests \
             -f /derivation-bnf/pom.xml \
-            -DtagNameFormat="@{project.version}"        
+            -DtagNameFormat="@{project.version}"  
+          mvn initialize -f /derivation-viaf/pom.xml
           mvn release:prepare \
             --batch-mode \
             -DreleaseVersion=$NEW_TAG \
