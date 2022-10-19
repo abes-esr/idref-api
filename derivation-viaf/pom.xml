@@ -9,7 +9,7 @@
     </parent>
     <groupId>fr.idref.api</groupId>
     <artifactId>derivation-viaf</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>derivation-viaf</name>
     <description>WS de derivation IDREF - VIAF </description>
 
