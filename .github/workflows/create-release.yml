@@ -54,13 +54,13 @@ jobs:
             --batch-mode \
             -DreleaseVersion=$NEW_TAG \
             -Darguments=-DskipTests \
-            -f /build/derivation-bnf/pom.xml \
+            -f /derivation-bnf/pom.xml \
             -DtagNameFormat="@{project.version}"        
           mvn release:prepare \
             --batch-mode \
             -DreleaseVersion=$NEW_TAG \
             -Darguments=-DskipTests \
-            -f /build/derivation-viaf/pom.xml \
+            -f /derivation-viaf/pom.xml \
             -DtagNameFormat="@{project.version}"            
           # merge la préparation de la nouvelle version sur develop
           # (version X.X.X-SNAPSHOT)
