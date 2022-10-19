@@ -70,7 +70,7 @@ jobs:
           git push
           # merge la préparation de la nouvelle version sur develop
           git switch develop
-          git merge main -m "Merge main to develop [skip ci]"
+          git merge master -m "Merge main to develop [skip ci]"
           git push
 
 
