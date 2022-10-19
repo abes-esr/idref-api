@@ -50,20 +50,12 @@ jobs:
           git config --global user.email "github-action@noreply"
           git config --global user.name "Github Action"
           ls -l *
-          mvn initialize -f /derivation-bnf/pom.xml
+          mvn initialize
           mvn release:prepare \
             --batch-mode \
             -DreleaseVersion=$NEW_TAG \
             -Darguments=-DskipTests \
-            -f /derivation-bnf/pom.xml \
-            -DtagNameFormat="@{project.version}"  
-          mvn initialize -f /derivation-viaf/pom.xml
-          mvn release:prepare \
-            --batch-mode \
-            -DreleaseVersion=$NEW_TAG \
-            -Darguments=-DskipTests \
-            -f /derivation-viaf/pom.xml \
-            -DtagNameFormat="@{project.version}"            
+            -DtagNameFormat="@{project.version}"              
           # merge la préparation de la nouvelle version sur develop
           # (version X.X.X-SNAPSHOT)
           # CURRENT_GIT_BRANCH vaut main ou master, c'est la où est créé la release
