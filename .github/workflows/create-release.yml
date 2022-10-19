@@ -49,6 +49,7 @@ jobs:
           # - pousser le tout sur le dépôt github
           git config --global user.email "github-action@noreply"
           git config --global user.name "Github Action"
+          ls -l *
           mvn initialize -f /derivation-bnf/pom.xml
           mvn release:prepare \
             --batch-mode \
