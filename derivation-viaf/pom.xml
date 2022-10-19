@@ -5,11 +5,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.12</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.idref.api</groupId>
     <artifactId>derivation-viaf</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>derivation-viaf</name>
     <description>WS de derivation IDREF - VIAF </description>
 
@@ -160,13 +160,3 @@
   </scm>
 
 </project>
-
-
-
-
-
-
-
-
-
-
