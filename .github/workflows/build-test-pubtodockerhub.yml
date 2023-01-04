@@ -20,8 +20,14 @@ on:
 
 
 jobs:
+# Derivation-Bnf job
   build-test-pubtodockerhub:
+    name: Build Derivation-Bnf
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: derivation-bnf
+
     steps:
       - name: "Build: checkout source code"
         uses: actions/checkout@v2
