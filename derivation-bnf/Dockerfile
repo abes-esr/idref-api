@@ -13,29 +13,16 @@ ENV LC_ALL fr_FR.UTF-8
 # si on a un .m2 local on peut décommenter la ligne suivante pour
 # éviter à maven de retélécharger toutes les dépendances
 #COPY ./.m2/    /root/.m2/
-COPY ./derivation-bnf/   /build/derivation-bnf/
-COPY ./derivation-viaf/  /build/derivation-viaf/
+COPY ./   /build/
 RUN mvn --batch-mode \
         -Dmaven.test.skip=false \
         -Duser.timezone=Europe/Paris \
         -Duser.language=fr \
-        -f /build/derivation-bnf/pom.xml \
-        package
-RUN mvn --batch-mode \
-        -Dmaven.test.skip=false \
-        -Duser.timezone=Europe/Paris \
-        -Duser.language=fr \
-        -f /build/derivation-viaf/pom.xml \
+        -f /build/pom.xml \
         package
 
 ###
 # Image pour le micro service derivation-bnf
 FROM openjdk:11 as derivation-bnf-server
-COPY --from=build-image /build/derivation-bnf/target/*.jar /app/derivation-bnf.jar
+COPY --from=build-image /build/target/*.jar /app/derivation-bnf.jar
 CMD ["java", "-jar", "/app/derivation-bnf.jar"]
-
-###
-# Image pour le micro service derivation-viaf
-FROM openjdk:11 as derivation-viaf-server
-COPY --from=build-image /build/derivation-viaf/target/*.jar /app/derivation-viaf.jar
-CMD ["java", "-jar", "/app/derivation-viaf.jar"]
