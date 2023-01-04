@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - '**.md'
       - '.github/**'
+      - 'derivation-viaf/**'
   pull_request:
   workflow_dispatch:
 

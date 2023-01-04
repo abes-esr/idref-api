@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - '**.md'
       - '.github/**'
+      - 'derivation-bnf/**'
   pull_request:
   workflow_dispatch:
 
