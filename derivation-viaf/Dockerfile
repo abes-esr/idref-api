@@ -1,5 +1,5 @@
 ###
-# Image pour la compilation d'un micro service IdRef : derivation-Viaf
+# Image pour la compilation d'un micro service IdRef : derivation-viaf
 FROM maven:3-jdk-11 as build-image
 WORKDIR /build/
 # Installation et configuration de la locale FR
