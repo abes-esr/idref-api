@@ -45,9 +45,9 @@ jobs:
           images: ${{ env.DOCKERHUB_IMAGE_PREFIX }}
 
       - name: "Push: login to DockerHub"
-        if: steps.filter.outputs.derivation-bnf == 'true' && github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin  
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: "Push: push docker image"
         if: steps.filter.outputs.derivation-bnf == 'true' && github.event_name != 'pull_request'
