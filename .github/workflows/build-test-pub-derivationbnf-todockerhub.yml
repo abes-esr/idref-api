@@ -1,0 +1,59 @@
+name: "build-test-pub-derivationbnf-todockerhub"
+
+env:
+  DOCKERHUB_IMAGE_PREFIX: abesesr/idref
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+# Derivation-Bnf job
+  build-test-pubtodockerhub:
+    name: Build Derivation-Bnf
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: derivation-bnf
+
+    steps:
+      - name: "Build: checkout source code"
+        uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            derivation-bnf:
+              - 'derivation-bnf/**'
+
+      - name: "Build: build docker image"
+        if: steps.filter.outputs.derivation-bnf == 'true'
+        run: |
+          docker build . -t localimage:latest
+
+      - name: "Push: prepare version from git tags/branchs"
+        if: steps.filter.outputs.derivation-bnf == 'true'
+        id: docker_tag_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.DOCKERHUB_IMAGE_PREFIX }}
+
+      - name: "Push: login to DockerHub"
+        if: steps.filter.outputs.derivation-bnf == 'true' && github.event_name != 'pull_request'
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: "Push: push docker image"
+        if: steps.filter.outputs.derivation-bnf == 'true' && github.event_name != 'pull_request'
+        run: |
+          DOCKER_TAGS="${{ steps.docker_tag_meta.outputs.tags }}"
+            for DOCKER_TAG in $DOCKER_TAGS
+            do
+              docker build . --target derivation-bnf-server -t ${DOCKER_TAG}-derivation-bnf
+              docker push ${DOCKER_TAG}-derivation-bnf
+            done
