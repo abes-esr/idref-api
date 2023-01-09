@@ -2,6 +2,7 @@ name: "build-test-pub-derivationbnf-todockerhub"
 
 env:
   DOCKERHUB_IMAGE_PREFIX: abesesr/idref
+  DIRECTORY: derivation-bnf
 
 on:
   push:
