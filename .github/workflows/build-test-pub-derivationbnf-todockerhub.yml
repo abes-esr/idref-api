@@ -7,18 +7,18 @@ env:
 on:
   push:
     paths:
-      - 'derivation-bnf/**'
+      - '$DIRECTORY/**'
   pull_request:
   workflow_dispatch:
 
 jobs:
 # Derivation-Bnf job
   build-test-pubtodockerhub:
-    name: Build Derivation-Bnf
+    name: Build $DIRECTORY
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: derivation-bnf
+        working-directory: $DIRECTORY
 
     steps:
       - name: "Build: checkout source code"
@@ -45,6 +45,6 @@ jobs:
           DOCKER_TAGS="${{ steps.docker_tag_meta.outputs.tags }}"
             for DOCKER_TAG in $DOCKER_TAGS
             do
-              docker build . --target derivation-bnf-server -t ${DOCKER_TAG}-derivation-bnf
-              docker push ${DOCKER_TAG}-derivation-bnf
+              docker build . --target $DIRECTORY-server -t ${DOCKER_TAG}-$DIRECTORY
+              docker push ${DOCKER_TAG}-$DIRECTORY
             done
