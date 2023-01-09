@@ -14,7 +14,7 @@ on:
 jobs:
 # Derivation-Bnf job
   build-test-pubtodockerhub:
-    name: Build ${{ env.DIRECTORY }}
+    name: Build Derivation-Bnf
     runs-on: ubuntu-latest
     defaults:
       run:
