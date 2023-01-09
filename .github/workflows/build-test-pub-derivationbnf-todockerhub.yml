@@ -2,7 +2,6 @@ name: "build-test-pub-derivationbnf-todockerhub"
 
 env:
   DOCKERHUB_IMAGE_PREFIX: abesesr/idref
-  DIRECTORY: derivation-bnf
 
 on:
   push:
@@ -14,11 +13,11 @@ on:
 jobs:
 # Derivation-Bnf job
   build-test-pubtodockerhub:
-    name: Build ${{ env.DIRECTORY }}
+    name: Build Derivation-Bnf
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.DIRECTORY }}
+        working-directory: derivation-bnf
 
     steps:
       - name: "Build: checkout source code"
@@ -45,6 +44,6 @@ jobs:
           DOCKER_TAGS="${{ steps.docker_tag_meta.outputs.tags }}"
             for DOCKER_TAG in $DOCKER_TAGS
             do
-              docker build . --target ${{ env.DIRECTORY }}-server -t ${DOCKER_TAG}-${{ env.DIRECTORY }}
-              docker push ${DOCKER_TAG}-${{ env.DIRECTORY }}
+              docker build . --target derivation-bnf-server -t ${DOCKER_TAG}-derivation-bnf
+              docker push ${DOCKER_TAG}-derivation-bnf
             done
