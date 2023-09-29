@@ -133,7 +133,9 @@ public class DerivationController {
             log.info("Step 1  Solr objet : " + solrObj.toString());
 
 // TODO check isSolrExist
-            if (!checkDataServices.isSolrExist(solrObj) || next.equals("true")) {
+            System.out.println("solrObj:"+solrObj.getResponse());
+            System.out.println("solrObj:"+solrObj.getResponse().getNumFound());
+            if (checkDataServices.isSolrDosntExist(solrObj) || next.equals("true")) {
                 String xmlViaf = getDataServices.getXmlViaf(p.getUriSourceViafXml());
                 log.info("Step 2 xml Viaf : " + xmlViaf);
 
