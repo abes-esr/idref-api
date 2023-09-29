@@ -43,7 +43,7 @@ public class CheckDataServices {
     public boolean isSruCheSuccess(String xml)      {return xml.contains("numberOfRecords>1</numberOfRecords>");}
 
     // TODO get value numfound in json solr
-    public boolean isSolrExist(SolrDoublon solr)    {return (solr.getAdditionalProperties().containsKey("result"));}
+    public boolean isSolrExist(SolrDoublon solr)    {return (solr.getResponse() != null && solr.getResponse().getNumFound() == 0);}
 
     public boolean isSolrDoublon(SolrDoublon solr)  {return (solr.getResponse() != null && solr.getResponse().getNumFound() > 0);}
 
