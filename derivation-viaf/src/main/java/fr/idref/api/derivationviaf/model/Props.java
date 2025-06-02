@@ -4,6 +4,7 @@ public class Props {
 
     private String uriSourceViaf;
     private String uriClusterViaf;
+    private String uriViaf;
     private String idSourceViaf;
     private String idClusterViaf;
 
@@ -42,6 +43,14 @@ public class Props {
 
     public void setUriClusterViaf(String uriClusterViaf) {
         this.uriClusterViaf = uriClusterViaf;
+    }
+
+    public String getUriViaf() {
+        return uriViaf;
+    }
+
+    public void setUriViaf(String uriViaf) {
+        this.uriViaf = uriViaf;
     }
 
     public String getIdSourceViaf() {

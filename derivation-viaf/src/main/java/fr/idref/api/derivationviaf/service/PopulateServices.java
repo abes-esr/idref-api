@@ -38,6 +38,8 @@ public class PopulateServices {
             //  get info from cluster viaf : uri et id
             p.setUriClusterViaf(checkServices.getUrlClusterViaf(idSourceViaf));
 
+            p.setUriViaf(checkServices.getUrlViaf(idSourceViaf));
+
             String idClusterViaf = getServices.getIdClusterViaf(p.getUriClusterViaf());
             if (idClusterViaf != null) {
 

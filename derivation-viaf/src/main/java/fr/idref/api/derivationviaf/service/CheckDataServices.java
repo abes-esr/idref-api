@@ -25,6 +25,9 @@ public class CheckDataServices {
     @Value("${spring.urlClusterViaf}")
     private String urlClusterViaf;
 
+    @Value("${spring.urlViaf}")
+    private String urlViaf;
+
     @Value("${spring.urlChe}")
     private String urlChe;
 
@@ -259,6 +262,9 @@ String end = "</srw:recordData>\n" +
         return urlClusterViaf.replaceAll("\\*",idSourceViaf);
     }
 
+    public String getUrlViaf(String idSourceViaf) {
+        return urlViaf.replaceAll("\\*",idSourceViaf);
+    }
 
 /*
     public Props populateParam(String uriSourceViaf, String token)
