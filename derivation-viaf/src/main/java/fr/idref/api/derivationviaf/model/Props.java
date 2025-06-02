@@ -4,7 +4,6 @@ public class Props {
 
     private String uriSourceViaf;
     private String uriClusterViaf;
-    private String uriSourceViafXml;
     private String idSourceViaf;
     private String idClusterViaf;
 
@@ -26,15 +25,7 @@ public class Props {
 
     @Override
     public String toString() {
-        return "Props{" + "uriSourceViaf='" + uriSourceViaf + '\'' + ",\n uriClusterViaf='" + uriClusterViaf + '\'' + ",\n uriSourceViafXml='" + uriSourceViafXml + '\'' + ",\n idSourceViaf='" + idSourceViaf + '\'' + ",\n idClusterViaf='" + idClusterViaf + '\'' + ",\n token='" + token + '\'' + ",\n recordId='" + recordId + '\'' + ",\n urlSolr='" + urlSolr + '\'' + ",\n message='" + message + '\'' + ",\n isValide=" + isValide + ",\n status='" + status + '\'' + ",\n reponse='" + reponse + '\'' + ",\n urlChe='" + urlChe + '\'' + ",\n login='" + login + '\'' + ",\n ppnSru='" + ppnSru + '\'' + ",\n urlXslt='" + urlXslt + '\'' + '}';
-    }
-
-    public String getUriSourceViafXml() {
-        return uriSourceViafXml;
-    }
-
-    public void setUriSourceViafXml(String uriSourceViafXml) {
-        this.uriSourceViafXml = uriSourceViafXml;
+        return "Props{" + "uriSourceViaf='" + uriSourceViaf + '\'' + ",\n uriClusterViaf='" + uriClusterViaf + '\'' + ",\n idSourceViaf='" + idSourceViaf + '\'' + ",\n idClusterViaf='" + idClusterViaf + '\'' + ",\n token='" + token + '\'' + ",\n recordId='" + recordId + '\'' + ",\n urlSolr='" + urlSolr + '\'' + ",\n message='" + message + '\'' + ",\n isValide=" + isValide + ",\n status='" + status + '\'' + ",\n reponse='" + reponse + '\'' + ",\n urlChe='" + urlChe + '\'' + ",\n login='" + login + '\'' + ",\n ppnSru='" + ppnSru + '\'' + ",\n urlXslt='" + urlXslt + '\'' + '}';
     }
 
     public String getUriSourceViaf() {

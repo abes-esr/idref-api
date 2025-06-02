@@ -32,7 +32,6 @@ public class PopulateServices {
             String idSourceViaf = checkServices.getIdSourceViaf(uriSourceViaf);
             p.setUriSourceViaf(uriSourceViaf);
             p.setIdSourceViaf(idSourceViaf);
-            p.setUriSourceViafXml(uriSourceViaf + "?httpAccept=text/xml");
 
             p.setUrlXslt(checkServices.getUrlXslt(uriSourceViaf));
 

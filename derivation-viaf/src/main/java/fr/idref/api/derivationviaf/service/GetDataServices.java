@@ -2,8 +2,8 @@ package fr.idref.api.derivationviaf.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import fr.idref.api.derivationviaf.handler.RestTemplateHandler;
-import fr.idref.api.derivationviaf.model.Entries;
 import fr.idref.api.derivationviaf.model.Props;
+import fr.idref.api.derivationviaf.model.dto.ViafResponse;
 import fr.idref.api.derivationviaf.model.solr.SolrDoublon;
 import net.sf.saxon.TransformerFactoryImpl;
 import org.slf4j.Logger;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -53,13 +54,42 @@ public class GetDataServices {
     }
 
     public String getIdClusterViaf(String url) {
-        Map<String,String> response = restTemplate.getForObject(url, Map.class);
-        return response.get("viafID");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ViafResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                ViafResponse.class
+        );
+
+        ViafResponse body = response.getBody();
+        if (body == null || body.getViafCluster() == null) {
+            return null;
+        }
+        return body.getViafCluster().getViafID();
     }
 
 
     public SolrDoublon getXmlSolr(String url) { return  restTemplate.getForObject(url, SolrDoublon.class); }
-    public String getXmlViaf(String url) {return restTemplate.getForObject(url, String.class); }
+    public String getXmlViaf(String url) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+
+        return response.getBody();
+    }
 
   //public SruChe getXmlSruChe(String url) {return restTemplate.getForObject(url, SruChe.class); }
     public String getXmlSruChe(String url) {return restTemplate.getForObject(url, String.class); }
