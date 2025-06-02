@@ -87,13 +87,13 @@ public class DerivationController {
                         p.setReponse(xmlSru);
                     }
                 } else {
-                    p.setMessage("step 3 STOP ws sru bnf no result");
+                    p.setMessage("Etape 3 interrompue : aucun resultat obtenu depuis le WS BnF");
                 }
             } else {
-                p.setMessage("step 2 STOP ws solrtotal doublon id bnf");
+                p.setMessage("Etape 2 interrompue : doublon detecte dans Solr");
             }
         } else {
-            log.info("step 1 ERROR : param non valide" + p.getMessage());
+            log.info("Etape 1 Erreur : param non valide" + p.getMessage());
 
         }
 
@@ -170,7 +170,7 @@ public class DerivationController {
                         p.setReponse(xmlSru);
                     }
                 } else {
-                    p.setMessage("step 3 STOP ws sru bnf no result");
+                    p.setMessage("Etape 3 interrompue : aucun resultat obtenu depuis le WS BnF");
                 }
             } else if (checkDataServices.isSolrDoublon(solrObj)) {
 
@@ -180,11 +180,11 @@ public class DerivationController {
                 p.setReponse(ppn.toString());
 
             } else {
-                p.setMessage("step 2 STOP ws solrtotal doublon id bnf");
+                p.setMessage("Etape 2 interrompue : doublon detecte dans Solr.");
             }
 
         } else {
-            log.info("step 1 ERROR : param non valide" + p.getMessage());
+            log.info("Etape 1  erreur  : param non valide" + p.getMessage());
         }
 
         JSONObject jo = new JSONObject();
