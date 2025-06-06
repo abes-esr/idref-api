@@ -56,7 +56,7 @@ public class GetDataServices {
     public String getIdClusterViaf(String url) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<ViafResponse> response = restTemplate.exchange(
@@ -67,10 +67,10 @@ public class GetDataServices {
         );
 
         ViafResponse body = response.getBody();
-        if (body == null || body.getViafCluster() == null) {
+        if (body == null || body.getViafID() == null) {
             return null;
         }
-        return body.getViafCluster().getViafID();
+        return body.getViafID();
     }
 
 
