@@ -168,7 +168,7 @@ public String getRecord(String xml)
         boolean isUriSourceViaf = false;
 
 
-        String find = "(http|https)://(viaf.org/(.*/)?processed)/(.*)";
+        String find = "(?:http|https)://(?:www\\.)?viaf.org/(?:.*/)?processed/(.*)";
 
         Pattern p = Pattern.compile(find);
         Matcher m = p.matcher(uriSourceViaf);
@@ -185,13 +185,13 @@ public String getRecord(String xml)
         String idSourceViaf = "";
 
        // https://viaf.org/processed/LC|n  80032817
-        String find = "(http|https)://(viaf.org/(.*/)?processed)/(.*)";
+        String find = "(?:http|https)://(?:www\\.)?viaf.org/(?:.*/)?processed/(.*)";
 
         Pattern p = Pattern.compile(find);
         Matcher m = p.matcher(uriSourceViaf);
 
         if (m.matches()) {
-            idSourceViaf = m.group(4);
+            idSourceViaf = m.group(1);
         }
 
         return idSourceViaf;
