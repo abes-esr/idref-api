@@ -23,6 +23,6 @@ RUN mvn --batch-mode \
 
 ###
 # Image pour : le micro service derivation-bnf
-FROM eclipse-temurin:11.0.29_7-jdk-alpine-3.23 as derivation-bnf-server
+FROM openjdk:11 as derivation-viaf-server
 COPY --from=build-image /build/target/*.jar /app/derivation-bnf.jar
 CMD ["java", "-jar", "/app/derivation-bnf.jar"]
