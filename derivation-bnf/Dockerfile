@@ -23,6 +23,6 @@ RUN mvn --batch-mode \
 
 ###
 # Image pour : le micro service derivation-bnf
-FROM openjdk:11-jre-bullseye as derivation-bnf-server
+FROM openjdk:11-bullseye as derivation-bnf-server
 COPY --from=build-image /build/target/*.jar /app/derivation-bnf.jar
 CMD ["java", "-jar", "/app/derivation-bnf.jar"]
