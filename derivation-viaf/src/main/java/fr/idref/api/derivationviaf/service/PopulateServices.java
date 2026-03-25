@@ -6,6 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class PopulateServices {
@@ -26,6 +28,12 @@ public class PopulateServices {
         p.setReponse("vide");
         p.setLogin(checkServices.getLogin(token));
         p.setValide(false);
+
+        //Si encodé 2 fois : c'est possible en copiant l'url depuis l'interface VIAF.
+        //https://stp.abes.fr/node/98756/edit?origine=idref et https://stp.abes.fr/node/98758/edit?origine=idref
+        if (uriSourceViaf.contains("%")){
+            uriSourceViaf = URLDecoder.decode(uriSourceViaf, StandardCharsets.UTF_8);
+        }
         if (checkServices.isUriSourceViaf(uriSourceViaf))
         {
             //  get info from source viaf : uri et id
