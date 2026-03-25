@@ -23,6 +23,6 @@ RUN mvn --batch-mode \
 
 ###
 # Image pour : le micro service derivation-viaf
-FROM openjdk:11 as derivation-viaf-server
+FROM eclipse-temurin:11-jre as derivation-viaf-server
 COPY --from=build-image /build/target/*.jar /app/derivation-viaf.jar
 CMD ["java", "-jar", "/app/derivation-viaf.jar"]
