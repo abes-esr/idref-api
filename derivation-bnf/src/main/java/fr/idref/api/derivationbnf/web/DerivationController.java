@@ -47,7 +47,7 @@ public class DerivationController {
      * insert xml in cbs by ws sru update
      *
      * @param ark   : url
-     * @param token : key from  authentification
+     * @param token : key from authentification
      * @return
      * @throws IOException
      */
