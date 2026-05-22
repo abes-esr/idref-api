@@ -38,9 +38,8 @@ jobs:
       - name: "Buildx and push"
         uses: docker/build-push-action@v7
         with:
-          context: .
-          file: derivation-bnf/Dockerfile
+          context: ./derivation-bnf
+          file: ./derivation-bnf/Dockerfile
           push: ${{ github.event_name != 'pull_request'}}
-          platforms: linux/amd64,linux/arm64
           target: derivation-bnf-server
           tags: ${{ steps.docker_tag_meta.outputs.tags }}-derivation-bnf
