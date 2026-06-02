@@ -1,4 +1,4 @@
-name: "build-test-pub-derivationbnf-todockerhub"
+name: "buildx-test-pub-derivationbnf-todockerhub"
 
 env:
   DOCKERHUB_IMAGE_PREFIX: abesesr/idref
@@ -11,8 +11,8 @@ on:
   workflow_dispatch:
 
 jobs:
-# Derivation-Bnf job
-  build-test-pubtodockerhub:
+  # Derivation-Bnf job
+  buildx-test-pubtodockerhub:
     name: Build Derivation-Bnf
     runs-on: ubuntu-latest
     steps:
