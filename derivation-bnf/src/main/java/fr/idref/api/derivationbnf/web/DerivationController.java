@@ -40,7 +40,7 @@ public class DerivationController {
 
 
     /**
-     * WS derivation idref :
+     * WS derivation idref
      * check data : format ark is valid , id from ark is unique
      * retrieve xml from bnf by ws bnf
      * transfo xsl
